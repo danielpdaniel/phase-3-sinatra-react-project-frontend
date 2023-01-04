@@ -16,7 +16,7 @@ function Song({ artists }) {
     useEffect(()=>{
     fetch(`http://localhost:9292/songs/${params.id}`)
     .then(r=>r.json())
-    .then(data=>{setSong(data); setCovers(data.covers)})}
+    .then(data=>{setSong(data); setCovers(data.covers); console.log(data.covers)})}
     , [])
 
     function handleNewCoverClick(){
@@ -59,7 +59,22 @@ function Song({ artists }) {
             body: JSON.stringify(postBody)
         })
         .then(r=>r.json())
-        .then(data=>{setSong([...song, data]); console.log(data)})
+        .then(data=>{console.log(data)})
+    }
+
+    function handleDelete(coverId){
+        fetch(`http://localhost:9292/covers/${coverId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(r=>r.json())
+        .then(data=>{
+            console.log(data)
+           const nonDeletedCovers = covers.filter(cover => cover.id !== data.id)
+            setCovers(nonDeletedCovers)
+        })
     }
 
     return (
@@ -102,7 +117,7 @@ function Song({ artists }) {
                         {/* <iframe src={cover.performance_link.replace("watch", "embed")}/> */}
                         <iframe width="709" height="399" src={cover.performance_link.replace("watch?v=", "embed/")} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                         <button>edit</button>
-                        <button>delete</button>
+                        <button onClick={()=>handleDelete(cover.id)}>delete</button>
                     </div>)}
             </div>
             : <h3>Loading...</h3>}
