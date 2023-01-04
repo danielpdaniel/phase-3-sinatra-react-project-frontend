@@ -4,6 +4,7 @@ import React, {useState, useEffect} from 'react';
 import {Route, Routes} from "react-router-dom";
 import SongsList from "./SongsList";
 import Song from "./Song";
+import NavBar from './NavBar';
 
 function App() {
   const [test, setTest] = useState(false)
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <div>
+      <NavBar/>
       <Routes>
         <Route path="/songs" element={<SongsList/>}/>
         <Route path="/songs/:id" element={<Song/>}/>
