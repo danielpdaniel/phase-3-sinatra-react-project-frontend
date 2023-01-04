@@ -2,10 +2,10 @@ import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 import React, { useEffect, useState } from "react";
 import {useParams} from "react-router-dom";
 
-function Song() {
+function Song({ artists }) {
     const [song, setSong] = useState(false)
-    const [artists, setArtists] = useState(false)
-    const [covers, setCovers] = useState(false)
+    const [formStatus, setFormStatus] = useState(false)
+    const [artistSearchTerm, setArtistSearchTerm] = useState(false)
 
     const params = useParams()
 
@@ -15,11 +15,9 @@ function Song() {
     .then(data=>{setSong(data)})}
     , [])
 
-    // useEffect(()=>{
-    //     fetch(`http://localhost:9292/songs/${params.id}/covers`)
-    //     .then(r=>r.json())
-    //     .then(data=>setCovers(data))
-    // }, [])
+    function handleNewCoverClick(){
+        setFormStatus(formStatus => !formStatus)
+    }
 
     return (
         <div>
@@ -29,7 +27,25 @@ function Song() {
                 <h3>{song.title}</h3>
                 <h4>By {song.artist.name}</h4> 
                 <h4>Covers:</h4>
-                <button>Add a Cover of {song.title}!</button>
+                <div>
+                <button onClick={handleNewCoverClick}>Add a Cover of {song.title}!</button>
+                {formStatus ? 
+                <div>
+                    <form>
+                        <label for="artist">Artist Name</label>
+                        <br></br>
+                        {/* <select>
+                            {artists.map(artist => <option key={artist.id} value={artist.name}>{artist.name}</option>)}
+                        </select> */}
+                        <input type="text" name="artist"/>
+                        <br></br>
+                        <label for="performance_link">YouTube link</label>
+                        <br></br>
+                        <input type="text" name="performance_link"/>
+                    </form>
+                </div>
+                : null}
+                </div>
                     {song.covers.map(cover => 
                     <div key={cover.id}>
                         <h5>
