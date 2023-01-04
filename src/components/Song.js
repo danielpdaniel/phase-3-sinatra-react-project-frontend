@@ -29,13 +29,16 @@ function Song() {
                 <h3>{song.title}</h3>
                 <h4>By {song.artist.name}</h4> 
                 <h4>Covers:</h4>
+                <button>Add a Cover of {song.title}!</button>
                     {song.covers.map(cover => 
                     <div key={cover.id}>
                         <h5>
                         {cover.artist.name}
                         </h5>
                         {/* <iframe src={cover.performance_link.replace("watch", "embed")}/> */}
-                        <iframe width="709" height="399" src={cover.performance_link.replace("watch?v=", "embed/")} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe width="709" height="399" src={cover.performance_link.replace("watch?v=", "embed/")} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                        <button>edit</button>
+                        <button>delete</button>
                     </div>)}
             </div>
             : <h3>Loading...</h3>}
