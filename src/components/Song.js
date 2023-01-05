@@ -5,22 +5,31 @@ import {useParams} from "react-router-dom";
 function Song({ artists }) {
     const [song, setSong] = useState(false);
     const [covers, setCovers] = useState(false);
+
     const [formStatus, setFormStatus] = useState(false);
     const [artistSearchTerm, setArtistSearchTerm] = useState("");
     const [filteredArtists, setFilteredArtists] = useState(false);
     const [formArtist, setFormArtist] = useState(false);
     const [formPerformanceLink, setFormPerformanceLink] = useState(false);
 
+    const [editStatus, setEditStatus] = useState(null)
+    const [performanceLinkEdit, setPerformanceLinkEdit] = useState("")
+
     const params = useParams()
 
     useEffect(()=>{
     fetch(`http://localhost:9292/songs/${params.id}`)
     .then(r=>r.json())
-    .then(data=>{setSong(data); setCovers(data.covers); console.log(data.covers)})}
+    .then(data=>{setSong(data); setCovers(data.covers)})}
     , [])
 
-    function handleNewCoverClick(){
+    function handleFormClick(e, cover){
+       if(e.target.name === "new_cover_btn"){
         setFormStatus(formStatus => !formStatus)
+       }else {
+        setEditStatus(cover.id);
+        // setPerformanceLinkEdit(cover.artist.name)
+       }
     }
 
     function handleArtistSearch(e){
@@ -41,6 +50,7 @@ function Song({ artists }) {
     }
 
     function handleInputChange(e) {
+        console.log(e.target)
         setFormPerformanceLink(e.target.value)
     }
 
@@ -59,7 +69,34 @@ function Song({ artists }) {
             body: JSON.stringify(postBody)
         })
         .then(r=>r.json())
-        .then(data=>{console.log(data)})
+        .then(data=>{setCovers([...covers, data])})
+    }
+
+    function handlePerformanceLinkEdit(e){
+        setPerformanceLinkEdit(e.target.value)
+        console.log(performanceLinkEdit)
+    }
+
+    function handleEdit(e, cover) {
+        e.preventDefault();
+
+        const patchBody = {
+            artist_id: cover.artist_id,
+            performance_link: performanceLinkEdit
+        }
+        fetch(`http://localhost:9292/covers/${cover.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(patchBody)
+        })
+        .then(r=>r.json())
+        .then(data=>{
+            const newCovers = covers.filter(cover => cover.artist.id !== data.artist.id)
+            setCovers([...newCovers, data])
+
+        })
     }
 
     function handleDelete(coverId){
@@ -86,7 +123,7 @@ function Song({ artists }) {
                 <h4>By {song.artist.name}</h4> 
                 <h4>Covers:</h4>
                 <div>
-                <button onClick={handleNewCoverClick}>Add a Cover of {song.title}!</button>
+                <button name={"new_cover_btn"} onClick={handleFormClick}>Add a Cover of {song.title}!</button>
                 {formStatus ? 
                 <div>
                     <form onSubmit={handleSubmit}>
@@ -110,13 +147,17 @@ function Song({ artists }) {
                 : null}
                 </div>
                     {covers.map(cover => 
-                    <div key={cover.id}>
+                    <div key={cover.id} > 
                         <h5>
                         {cover.artist.name}
                         </h5>
-                        {/* <iframe src={cover.performance_link.replace("watch", "embed")}/> */}
                         <iframe width="709" height="399" src={cover.performance_link.replace("watch?v=", "embed/")} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                        <button>edit</button>
+                        <button name={`edit_cover_btn_${cover.id}`} onClick={(e)=>handleFormClick(e, cover)}>Edit</button>
+                        <form onSubmit={(e)=>handleEdit(e, cover)}>
+                            <label>New Performance Link</label>
+                            <input name={`edit_performance_link`} value={performanceLinkEdit} type="text" placeholder={`Youtube Link Here...`} onChange={handlePerformanceLinkEdit}/>
+                            <input name={`patch_submit_btn`} type="submit"/>
+                        </form>
                         <button onClick={()=>handleDelete(cover.id)}>delete</button>
                     </div>)}
             </div>
