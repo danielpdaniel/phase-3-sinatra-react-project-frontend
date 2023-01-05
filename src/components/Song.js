@@ -27,7 +27,7 @@ function Song({ artists }) {
        if(e.target.name === "new_cover_btn"){
         setFormStatus(formStatus => !formStatus)
        }else {
-        setEditStatus(cover.id);
+        editStatus !== cover.id ? setEditStatus(cover.id) : setEditStatus(null);
         // setPerformanceLinkEdit(cover.artist.name)
        }
     }
@@ -152,13 +152,13 @@ function Song({ artists }) {
                         {cover.artist.name}
                         </h5>
                         <iframe width="709" height="399" src={cover.performance_link.replace("watch?v=", "embed/")} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                        <button name={`edit_cover_btn_${cover.id}`} onClick={(e)=>handleFormClick(e, cover)}>Edit</button>
-                        <form onSubmit={(e)=>handleEdit(e, cover)}>
+                        <button name={`edit_cover_btn_${cover.id}`} onClick={(e)=>handleFormClick(e, cover)}>{editStatus === cover.id ? "Cancel" : "Edit"}</button>
+                        {editStatus === cover.id ? <form onSubmit={(e)=>handleEdit(e, cover)}>
                             <label>New Performance Link</label>
                             <input name={`edit_performance_link`} value={performanceLinkEdit} type="text" placeholder={`Youtube Link Here...`} onChange={handlePerformanceLinkEdit}/>
                             <input name={`patch_submit_btn`} type="submit"/>
-                        </form>
-                        <button onClick={()=>handleDelete(cover.id)}>delete</button>
+                        </form> : null}
+                        {cover.id === editStatus ? null : <button onClick={()=>handleDelete(cover.id)}>delete</button>}
                     </div>)}
             </div>
             : <h3>Loading...</h3>}
