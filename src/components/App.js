@@ -6,6 +6,7 @@ import SongsList from "./SongsList";
 import Song from "./Song";
 import NavBar from './NavBar';
 import ArtistsList from './ArtistsList';
+import Artist from './Artist';
 
 function App() {
   const [test, setTest] = useState(false)
@@ -30,6 +31,7 @@ function App() {
         <Route path="/songs" element={<SongsList/>}/>
         <Route path="/songs/:id" element={<Song artists={artists} />}/>
         <Route path="/artists" element={<ArtistsList artists={artists} />} />
+        <Route path="/artists/:id" element={<Artist artists={artists} />} />
         <Route exact path="/" element={<h2>Home!</h2>}/>
       </Routes>
     </div>
