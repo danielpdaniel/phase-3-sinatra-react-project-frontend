@@ -12,7 +12,19 @@ function Artist({artists}) {
             <h2>{artist ? artist.name : "Loading..."}</h2>
             <h3>Songs:</h3>
             <ul>
-            {artist ? artist.songs.map(song => <li key={song.id}>{song.title}</li>) : <li>Loading...</li>}
+            {artist ? artist.songs.map(song => 
+                <li key={song.id}>
+                    {song.title}
+                </li>) : 
+                <li>Loading...</li>}
+            </ul>
+            <h3>Covers:</h3>
+            <ul>
+            {artist ? artist.covers.map(cover => 
+                <li key={`cover${cover.id}`}>
+                    {cover.song.title}
+                </li>) : 
+                <li>Loading...</li>}
             </ul>
         </div>
     )
