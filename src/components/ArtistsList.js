@@ -7,7 +7,7 @@ function ArtistsList({ artists }) {
         <h2>Artists!</h2>
         <ul>
         {artists ? artists.map(artist =>
-        <li>
+        <li key={artist.id}>
             <NavLink to={`/artists/${artist.id}`}>
             {artist.name}
             </NavLink>
