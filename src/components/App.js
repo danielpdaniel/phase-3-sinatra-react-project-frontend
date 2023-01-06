@@ -5,6 +5,7 @@ import {Route, Routes} from "react-router-dom";
 import SongsList from "./SongsList";
 import Song from "./Song";
 import NavBar from './NavBar';
+import ArtistsList from './ArtistsList';
 
 function App() {
   const [test, setTest] = useState(false)
