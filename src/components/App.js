@@ -28,8 +28,8 @@ function App() {
       <NavBar/>
       <Routes>
         <Route path="/songs" element={<SongsList/>}/>
-        <Route path="/songs/:id" element={<Song artists={artists}/>}/>
-        <Route path="/artists" element={<ArtistsList/>} />
+        <Route path="/songs/:id" element={<Song artists={artists} />}/>
+        <Route path="/artists" element={<ArtistsList artists={artists} />} />
         <Route exact path="/" element={<h2>Home!</h2>}/>
       </Routes>
     </div>
