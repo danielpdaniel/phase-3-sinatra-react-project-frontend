@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 function ArtistsList({ artists }) {
-    console.log(artists)
+    
     return (
         <div>
         <h2>Artists!</h2>
