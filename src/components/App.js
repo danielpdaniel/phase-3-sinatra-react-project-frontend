@@ -28,6 +28,7 @@ function App() {
       <Routes>
         <Route path="/songs" element={<SongsList/>}/>
         <Route path="/songs/:id" element={<Song artists={artists}/>}/>
+        <Route path="/artists" element={<ArtistsList/>} />
         <Route exact path="/" element={<h2>Home!</h2>}/>
       </Routes>
     </div>
