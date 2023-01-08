@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 function CreateSong({ artists, onNewSong }){
     const [newSongTitle, setNewSongTitle] = useState(null)
     const [newSongArtistId, setNewSongArtistId] = useState(null)
-    console.log(artists)
 
    function handleFormChange(e){
     const input = e.target.value
