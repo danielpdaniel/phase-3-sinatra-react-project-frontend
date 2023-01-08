@@ -15,6 +15,23 @@ function ArtistsList({ artists, onArtistsChange }) {
     function handleEditInput(e) {
         setArtistNameEdit(e.target.value)
     }
+
+    function handleEditSubmit(e) {
+        e.preventDefault()
+
+        const patchBody = {
+            name: artistNameEdit
+        }
+        fetch(`http://localhost:9292/artists/${editStatus}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(patchBody)
+        })
+        .then(r=>r.json())
+        .then(data=>{onArtistsChange(data); setEditStatus(null)})
+    }
     return (
         <div>
             <CreateArtist artists={artists} onArtistsChange={onArtistsChange}/>
@@ -23,9 +40,10 @@ function ArtistsList({ artists, onArtistsChange }) {
         {artists ? artists.map(artist =>
             <li key={artist.id}>
                 {artist.id === editStatus ?
-                // <form>
-                    <input placeholder={artist.name} value={artistNameEdit} onChange={handleEditInput}/>
-                // </form>
+                <form onSubmit={handleEditSubmit}>
+                    <input placeholder={artist.name} type="text" value={artistNameEdit} onChange={handleEditInput}/>
+                    <input type="submit"/>
+                </form>
                     :
                 <NavLink to={`/artists/${artist.id}`}>
                 {artist.name}

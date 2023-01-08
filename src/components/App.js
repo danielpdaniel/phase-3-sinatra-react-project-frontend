@@ -25,7 +25,20 @@ function App() {
   }, [])
 
   function handleArtistsChange(newArtistInfo){
-    setArtists([...artists, newArtistInfo])
+    const allArtists = [...artists.filter(artist => artist.id !== newArtistInfo.id), newArtistInfo]
+    function compareArtistsId(a, b){
+      if (a.id < b.id){
+        return -1
+      }else if (a.id > b.id) {
+        return 1
+      }else {
+        return 0
+      }
+    }
+    const orderedArtists = allArtists.sort(compareArtistsId);
+    console.log(orderedArtists)
+    setArtists(orderedArtists)
+    // setArtists([...artists.filter(artist => artist.id !== newArtistInfo.id), newArtistInfo])
   }
 
   return (
