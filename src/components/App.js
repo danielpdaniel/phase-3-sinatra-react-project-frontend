@@ -44,7 +44,7 @@ function App() {
     <div>
       <NavBar/>
       <Routes>
-        <Route path="/songs" element={<SongsList/>}/>
+        <Route path="/songs" element={<SongsList artists={artists}/>}/>
         <Route path="/songs/:id" element={<Song artists={artists} />}/>
         <Route path="/artists" element={<ArtistsList artists={artists} onArtistsChange={handleArtistsChange}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} />} />

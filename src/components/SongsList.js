@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 import CreateSong from "./CreateSong";
 
-function SongsList(){
+function SongsList({ artists }){
     const [songs, setSongs] = useState(false)
 
     useEffect(()=>{
@@ -11,9 +11,13 @@ function SongsList(){
         .then(data=>setSongs(data))
     }, [])
 
+    function handleNewSong(newSong){
+        setSongs([...songs, newSong])
+    }
+
     return (
         <div>
-            <CreateSong />
+            <CreateSong artists={artists} onNewSong={handleNewSong}/>
             <h3>Songs</h3>
             <ul>
                 {songs ? songs.map(song => 
