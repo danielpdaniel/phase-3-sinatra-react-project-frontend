@@ -25,7 +25,7 @@ function App() {
   }, [])
 
   function handleArtistsChange(newArtistInfo){
-    setArtists(newArtistInfo)
+    setArtists([...artists, newArtistInfo])
   }
 
   return (
