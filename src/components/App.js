@@ -36,7 +36,6 @@ function App() {
       }
     }
     const orderedArtists = allArtists.sort(compareArtistsId);
-    console.log(orderedArtists)
     setArtists(orderedArtists)
     // setArtists([...artists.filter(artist => artist.id !== newArtistInfo.id), newArtistInfo])
   }

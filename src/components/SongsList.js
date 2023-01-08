@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
+import CreateSong from "./CreateSong";
 
 function SongsList(){
     const [songs, setSongs] = useState(false)
@@ -12,6 +13,7 @@ function SongsList(){
 
     return (
         <div>
+            <CreateSong />
             <h3>Songs</h3>
             <ul>
                 {songs ? songs.map(song => 

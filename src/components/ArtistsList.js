@@ -5,7 +5,6 @@ import CreateArtist from './CreateArtist';
 function ArtistsList({ artists, onArtistsChange }) {
     const [editStatus, setEditStatus] = useState(null);
     const [artistNameEdit, setArtistNameEdit] = useState(null)
-    console.log(editStatus)
     
     function handleEditClick(artist){
         editStatus !== artist.id ? setEditStatus(artist.id) : setEditStatus(null);
