@@ -1,10 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import CreateArtist from './CreateArtist';
 
-function ArtistsList({ artists }) {
+function ArtistsList({ artists, onArtistsChange }) {
     
     return (
         <div>
+            <CreateArtist artists={artists} onArtistsChange={onArtistsChange}/>
         <h2>Artists!</h2>
         <ul>
         {artists ? artists.map(artist =>

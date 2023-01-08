@@ -24,13 +24,17 @@ function App() {
     .then(data=>setArtists(data))
   }, [])
 
+  function handleArtistsChange(newArtistInfo){
+    setArtists(newArtistInfo)
+  }
+
   return (
     <div>
       <NavBar/>
       <Routes>
         <Route path="/songs" element={<SongsList/>}/>
         <Route path="/songs/:id" element={<Song artists={artists} />}/>
-        <Route path="/artists" element={<ArtistsList artists={artists} />} />
+        <Route path="/artists" element={<ArtistsList artists={artists} onArtistsChange={handleArtistsChange}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} />} />
         <Route exact path="/" element={<h2>Home!</h2>}/>
       </Routes>
