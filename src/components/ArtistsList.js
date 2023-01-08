@@ -30,7 +30,7 @@ function ArtistsList({ artists, onArtistsChange }) {
             body: JSON.stringify(patchBody)
         })
         .then(r=>r.json())
-        .then(data=>{onArtistsChange(data); setEditStatus(null)})
+        .then(data=>{onArtistsChange(data); setEditStatus(null); setArtistNameEdit(null)})
     }
     return (
         <div>
