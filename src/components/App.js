@@ -22,29 +22,38 @@ function App() {
   useEffect(()=>{
     fetch("http://localhost:9292/artists")
     .then(r=>r.json())
-    .then(data=>setArtists(data))
+    .then(data=>{
+      setArtists(data); 
+      const filteredSongs = [];
+      data.forEach(artist => artist.songs.forEach(song => filteredSongs.push(song)));
+      setSongs(filteredSongs)
+    })
   }, [])
+  // console.log(songs)
 
 
-  useEffect(()=>{
-      fetch("http://localhost:9292/songs")
-      .then(r=>r.json())
-      .then(data=>setSongs(data))
-  }, [])
+  // useEffect(()=>{
+  //     fetch("http://localhost:9292/songs")
+  //     .then(r=>r.json())
+  //     .then(data=>setSongs(data))
+  // }, [])
 
-  function handleArtistsChange(newArtistInfo){
-    const allArtists = [...artists.filter(artist => artist.id !== newArtistInfo.id), newArtistInfo]
-    function compareArtistsId(a, b){
-      if (a.id < b.id){
-        return -1
-      }else if (a.id > b.id) {
-        return 1
-      }else {
-        return 0
-      }
-    }
-    const orderedArtists = allArtists.sort(compareArtistsId);
-    setArtists(orderedArtists)
+  function handleArtistsChange(newArtistInfo, deleteStatus){
+    const allArtists = deleteStatus ? [...artists.filter(artist => artist.id !== newArtistInfo.id)]
+    :
+    artists.map(artist => artist.id === newArtistInfo.id ? newArtistInfo : artist)
+    // [...artists.filter(artist => artist.id !== newArtistInfo.id), newArtistInfo]
+    // function compareArtistsId(a, b){
+    //   if (a.name < b.name){
+    //     return -1
+    //   }else if (a.name > b.name) {
+    //     return 1
+    //   }else {
+    //     return 0
+    //   }
+    // }
+    // const orderedArtists = allArtists.sort(compareArtistsId);
+    setArtists(allArtists)
     // setArtists([...artists.filter(artist => artist.id !== newArtistInfo.id), newArtistInfo])
   }
 
@@ -58,7 +67,7 @@ function App() {
       <NavBar/>
       <Routes>
         <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongsChange={handleSongsChange}/>}/>
-        <Route path="/songs/:id" element={<Song artists={artists} onArtistsChange={handleArtistsChange}/>}/>
+        <Route path="/songs/:id" element={<Song artists={artists} />}/>
         <Route path="/artists" element={<ArtistsList artists={artists} onArtistsChange={handleArtistsChange}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} />} />
         <Route exact path="/" element={<h2>Home!</h2>}/>

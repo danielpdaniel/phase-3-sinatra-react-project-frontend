@@ -31,6 +31,19 @@ function ArtistsList({ artists, onArtistsChange }) {
         .then(r=>r.json())
         .then(data=>{onArtistsChange(data); setEditStatus(null); setArtistNameEdit(null)})
     }
+
+    function handleDelete(artist){
+        fetch(`http://localhost:9292/artists/${artist.id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }  
+        })
+        .then(r=>r.json())
+        .then(data=>{
+            onArtistsChange(data, true)
+        })
+    }
     return (
         <div>
             <CreateArtist artists={artists} onArtistsChange={onArtistsChange}/>
@@ -48,6 +61,7 @@ function ArtistsList({ artists, onArtistsChange }) {
                 {artist.name}
                 </NavLink>}
                 <button onClick={()=>handleEditClick(artist)}>{artist.id === editStatus ? "Cancel" : "Edit"}</button>
+                <button onClick={()=>handleDelete(artist)}>Delete</button>
             </li>)
              : <h4>Loading...</h4>}
         {/* </ul> */}
