@@ -1,27 +1,29 @@
-import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 import React, { useEffect, useState } from "react";
 import {useParams} from "react-router-dom";
 
-function Song({ artists }) {
+function Song({ artists, songs }) {
+    const params = useParams()
     const [song, setSong] = useState(false);
+
     const [covers, setCovers] = useState(false);
 
     const [formStatus, setFormStatus] = useState(false);
     const [artistSearchTerm, setArtistSearchTerm] = useState("");
-    const [filteredArtists, setFilteredArtists] = useState(false);
+    // const [filteredArtists, setFilteredArtists] = useState(false);
     const [formArtist, setFormArtist] = useState(false);
     const [formPerformanceLink, setFormPerformanceLink] = useState(false);
 
     const [editStatus, setEditStatus] = useState(null)
     const [performanceLinkEdit, setPerformanceLinkEdit] = useState("")
 
-    const params = useParams()
-
     useEffect(()=>{
     fetch(`http://localhost:9292/songs/${params.id}`)
     .then(r=>r.json())
     .then(data=>{setSong(data); setCovers(data.covers)})}
     , [])
+
+    // const song = songs ? songs.filter(song => song.id === parseInt(params.id, 10))[0] : null
+    
 
     function handleFormClick(e, cover){
        if(e.target.name === "new_cover_btn"){
@@ -32,25 +34,29 @@ function Song({ artists }) {
        }
     }
 
-    function handleArtistSearch(e){
-        if (e.target.value === ""){
-            setArtistSearchTerm("")
-            setFilteredArtists(false)
-        }else{
-       const searchValue = e.target.value
-        setArtistSearchTerm(searchValue)
-        setFilteredArtists(true)
-        }
-    }
+    // function handleArtistSearch(e){
+    //     if (e.target.value === ""){
+    //         setArtistSearchTerm("")
+    //         setFilteredArtists(false)
+    //     }else{
+    //    const searchValue = e.target.value
+    //     setArtistSearchTerm(searchValue)
+    //     setFilteredArtists(true)
+    //     }
+    // }
 
-    function handleArtistClick(artist) {
+    // function handleArtistClick(artist) {
+    //     setFormArtist(artist)
+    //     setArtistSearchTerm(artist.name)
+    //     setFilteredArtists(false)
+    // }
+
+    function handleArtistSelection(e){
+        const artist = artists.filter(artist => artist.name === e.target.value)[0]
         setFormArtist(artist)
-        setArtistSearchTerm(artist.name)
-        setFilteredArtists(false)
     }
 
     function handleInputChange(e) {
-        console.log(e.target)
         setFormPerformanceLink(e.target.value)
     }
 
@@ -127,16 +133,16 @@ function Song({ artists }) {
                 {formStatus ? 
                 <div>
                     <form onSubmit={handleSubmit}>
-                        <label>Artist Name</label>
+                        <label>Artist</label>
                         <br></br>
-                        {/* <select>
+                        <select onChange={handleArtistSelection}>
+                            <option>Select Arist...</option>
                             {artists.map(artist => <option key={artist.id} value={artist.name}>{artist.name}</option>)}
-                        </select> */}
-                        <input type="text" name="artist" onChange={handleArtistSearch} value={artistSearchTerm}/>
+                        </select>
+                        {/* <input type="text" name="artist" onChange={handleArtistSearch} value={artistSearchTerm}/>
                         <div className="dropdown">
-                        {filteredArtists ? artists.map(artist => artist.name.toUpperCase().includes(artistSearchTerm.toUpperCase()) ? <p key={artist.id} onClick={()=>handleArtistClick(artist)}>{artist.name}</p> : null) : null}
-
-                        </div>
+                        {filteredArtists ? artists.map(artist => artist.name.toUpperCase().includes(artistSearchTerm.toUpperCase()) ? <p key={artist.id} onClick={()=>handleArtistClick(artist)}>{artist.name}</p> : null) : null} */}
+                        {/* </div> */}
                         <br></br>
                         <label>YouTube link</label>
                         <br></br>
@@ -146,7 +152,7 @@ function Song({ artists }) {
                 </div>
                 : null}
                 </div>
-                    {covers.map(cover => 
+                    {song.covers.map(cover => 
                     <div key={cover.id} > 
                         <h5>
                         {cover.artist.name}

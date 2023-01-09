@@ -2,17 +2,17 @@ import React, {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 import CreateSong from "./CreateSong";
 
-function SongsList({ artists }){
-    const [songs, setSongs] = useState(false)
+function SongsList({ artists, songs, onSongsChange }){
+    // const [songs, setSongs] = useState(false)
 
-    useEffect(()=>{
-        fetch("http://localhost:9292/songs")
-        .then(r=>r.json())
-        .then(data=>setSongs(data))
-    }, [])
+    // useEffect(()=>{
+    //     fetch("http://localhost:9292/songs")
+    //     .then(r=>r.json())
+    //     .then(data=>setSongs(data))
+    // }, [])
 
     function handleNewSong(newSong){
-        setSongs([...songs, newSong])
+        onSongsChange([...songs, newSong])
     }
 
     return (

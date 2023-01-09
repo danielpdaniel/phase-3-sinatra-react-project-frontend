@@ -9,8 +9,9 @@ import ArtistsList from './ArtistsList';
 import Artist from './Artist';
 
 function App() {
-  const [test, setTest] = useState(false)
-  const [artists, setArtists] = useState(false)
+  const [test, setTest] = useState(false);
+  const [artists, setArtists] = useState(false);
+  const [songs, setSongs] = useState(false);
 
   useEffect(()=>{
     fetch("http://localhost:9292/test")
@@ -22,6 +23,13 @@ function App() {
     fetch("http://localhost:9292/artists")
     .then(r=>r.json())
     .then(data=>setArtists(data))
+  }, [])
+
+
+  useEffect(()=>{
+      fetch("http://localhost:9292/songs")
+      .then(r=>r.json())
+      .then(data=>setSongs(data))
   }, [])
 
   function handleArtistsChange(newArtistInfo){
@@ -40,12 +48,17 @@ function App() {
     // setArtists([...artists.filter(artist => artist.id !== newArtistInfo.id), newArtistInfo])
   }
 
+  function handleSongsChange(newSongData){
+    setSongs([...songs, newSongData])
+  }
+
+
   return (
     <div>
       <NavBar/>
       <Routes>
-        <Route path="/songs" element={<SongsList artists={artists}/>}/>
-        <Route path="/songs/:id" element={<Song artists={artists} />}/>
+        <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongsChange={handleSongsChange}/>}/>
+        <Route path="/songs/:id" element={<Song artists={artists} songs={songs}/>}/>
         <Route path="/artists" element={<ArtistsList artists={artists} onArtistsChange={handleArtistsChange}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} />} />
         <Route exact path="/" element={<h2>Home!</h2>}/>
