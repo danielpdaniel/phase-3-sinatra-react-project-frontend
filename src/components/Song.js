@@ -8,7 +8,7 @@ function Song({ artists, songs }) {
     const [covers, setCovers] = useState(false);
 
     const [formStatus, setFormStatus] = useState(false);
-    const [artistSearchTerm, setArtistSearchTerm] = useState("");
+    // const [artistSearchTerm, setArtistSearchTerm] = useState("");
     // const [filteredArtists, setFilteredArtists] = useState(false);
     const [formArtist, setFormArtist] = useState(false);
     const [formPerformanceLink, setFormPerformanceLink] = useState(false);
@@ -75,7 +75,7 @@ function Song({ artists, songs }) {
             body: JSON.stringify(postBody)
         })
         .then(r=>r.json())
-        .then(data=>{setCovers([...covers, data])})
+        .then(data=>{setCovers([...covers, data]);})
     }
 
     function handlePerformanceLinkEdit(e){
@@ -152,7 +152,7 @@ function Song({ artists, songs }) {
                 </div>
                 : null}
                 </div>
-                    {song.covers.map(cover => 
+                    {covers.map(cover => 
                     <div key={cover.id} > 
                         <h5>
                         {cover.artist.name}
