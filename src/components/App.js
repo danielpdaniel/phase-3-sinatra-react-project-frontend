@@ -44,10 +44,15 @@ function App() {
   }
 
   function handleSongsChange(newOrDeletedData, deleteStatus){
-    deleteStatus ? 
-    setSongs(songs.filter(song => song.id !== newOrDeletedData.id))
+    // deleteStatus ? 
+    // setSongs(songs.filter(song => song.id !== newOrDeletedData.id))
+    // :
+    // setSongs([...songs, newOrDeletedData])
+    const updatedSongs = deleteStatus ? 
+    songs.filter(song => song.id !== newOrDeletedData.id)
     :
-    setSongs([...songs, newOrDeletedData])
+    songs.map(song => song.id !== newOrDeletedData.id ? song : newOrDeletedData)
+    setSongs(updatedSongs)
   }
 
 

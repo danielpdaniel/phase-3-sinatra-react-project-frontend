@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {useParams} from "react-router-dom";
 
-function Song({ artists, songs }) {
+function Song({ artists }) {
     const params = useParams()
     const [song, setSong] = useState(false);
 
     const [covers, setCovers] = useState(false);
 
     const [formStatus, setFormStatus] = useState(false);
-    // const [artistSearchTerm, setArtistSearchTerm] = useState("");
-    // const [filteredArtists, setFilteredArtists] = useState(false);
     const [formArtist, setFormArtist] = useState(false);
     const [formPerformanceLink, setFormPerformanceLink] = useState(false);
 
@@ -20,10 +18,7 @@ function Song({ artists, songs }) {
     fetch(`http://localhost:9292/songs/${params.id}`)
     .then(r=>r.json())
     .then(data=>{setSong(data); setCovers(data.covers)})}
-    , [])
-
-    // const song = songs ? songs.filter(song => song.id === parseInt(params.id, 10))[0] : null
-    
+    , [])    
 
     function handleFormClick(e, cover){
        if(e.target.name === "new_cover_btn"){
@@ -127,6 +122,7 @@ function Song({ artists, songs }) {
             <div>
                 <h3>{song.title}</h3>
                 <h4>By {song.artist.name}</h4> 
+                <iframe width="709" height="399" src={song.performance_link.replace("watch?v=", "embed/")} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                 <h4>Covers:</h4>
                 <div>
                 <button name={"new_cover_btn"} onClick={handleFormClick}>Add a Cover of {song.title}!</button>

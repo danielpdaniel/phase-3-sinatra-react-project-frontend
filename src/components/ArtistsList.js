@@ -61,7 +61,7 @@ function ArtistsList({ artists, onArtistsChange }) {
                 {artist.name}
                 </NavLink>}
                 <button onClick={()=>handleEditClick(artist)}>{artist.id === editStatus ? "Cancel" : "Edit"}</button>
-                <button onClick={()=>handleDelete(artist)}>Delete</button>
+                {editStatus ? null : <button onClick={()=>handleDelete(artist)}>Delete</button>}
             </li>)
              : <h4>Loading...</h4>}
         {/* </ul> */}
