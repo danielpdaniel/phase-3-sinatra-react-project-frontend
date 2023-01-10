@@ -3,21 +3,36 @@ import React, {useState} from 'react';
 function CreateSong({ artists, onNewSong }){
     const [newSongTitle, setNewSongTitle] = useState(null)
     const [newSongArtistId, setNewSongArtistId] = useState(null)
+    const [newSongPerformanceLink, setNewSongPerformanceLink] = useState(null)
 
    function handleFormChange(e){
     const input = e.target.value
-    e.target.name === "newSongTitle" ? setNewSongTitle(input) : setNewSongArtistId(artists.filter(artist => artist.name === input)[0].id)
+    // e.target.name === "newSongTitle" ? setNewSongTitle(input) : setNewSongArtistId(artists.filter(artist => artist.name === input)[0].id)
+    if (e.target.name === "newSongTitle"){
+        setNewSongTitle(input)
+    }else if (e.target.name === "newSongArtist"){
+        setNewSongArtistId(artists.filter(artist => artist.name === input)[0].id)
+    }else if (e.target.name === "newSongPerformanceLink"){
+        setNewSongPerformanceLink(input)
+    }
    }
-   
+  
     function handleSongSubmit(e){
         e.preventDefault()
 
         const postBody = {
             title: newSongTitle,
-            artist_id: newSongArtistId
+            artist_id: newSongArtistId,
+            performance_link: newSongPerformanceLink
         }
 
-
+        if (!newSongTitle){
+            alert("You must add song title to submit!")
+        }else if (!newSongArtistId){
+            alert("You must select artist to submit!")
+        }else if (!newSongPerformanceLink){
+            alert("You must add YouTube perfomance link to submit!")
+        }else {
         fetch(`http://localhost:9292/songs`, {
             method: "POST",
             headers: {
@@ -27,6 +42,7 @@ function CreateSong({ artists, onNewSong }){
         })
         .then(r=>r.json())
         .then(data=>onNewSong(data))
+         }
     }
     return (
         <div>
@@ -39,6 +55,8 @@ function CreateSong({ artists, onNewSong }){
                     <option>Select Artist...</option>
                     {artists ? artists.map(artist => <option key={artist.id}>{artist.name}</option>) : <option>Loading...</option>}
                 </select>
+                <label>YouTube Performance Link</label>
+                <input type="text" name="newSongPerformanceLink" onChange={handleFormChange}/>
                 <input type="submit"/>
             </form>
         </div>

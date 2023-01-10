@@ -12,7 +12,18 @@ function SongsList({ artists, songs, onSongsChange }){
     // }, [])
 
     function handleNewSong(newSong){
-        onSongsChange([...songs, newSong])
+        onSongsChange(newSong)
+    }
+
+    function handleDeleteSong(song){
+        fetch(`http://localhost:9292/songs/${song.id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(r=>r.json())
+        .then(data=> onSongsChange(data, true))
     }
 
     return (
@@ -25,6 +36,7 @@ function SongsList({ artists, songs, onSongsChange }){
                     <NavLink to = {`/songs/${song.id}`}>
                     {song.title}
                     </NavLink>
+                    <button onClick={()=>handleDeleteSong(song)}>Delete</button>
                 </li>
                     ) : <li>Loading...</li>}
             </ul>

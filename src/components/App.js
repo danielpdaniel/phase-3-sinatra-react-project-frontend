@@ -14,12 +14,6 @@ function App() {
   const [songs, setSongs] = useState(false);
 
   useEffect(()=>{
-    fetch("http://localhost:9292/test")
-    .then(r=>r.json())
-    .then(data=>setTest(data[0].name))
-  }, [])
-
-  useEffect(()=>{
     fetch("http://localhost:9292/artists")
     .then(r=>r.json())
     .then(data=>{
@@ -29,14 +23,6 @@ function App() {
       setSongs(filteredSongs)
     })
   }, [])
-  // console.log(songs)
-
-
-  // useEffect(()=>{
-  //     fetch("http://localhost:9292/songs")
-  //     .then(r=>r.json())
-  //     .then(data=>setSongs(data))
-  // }, [])
 
   function handleArtistsChange(newArtistInfo, deleteStatus){
     const allArtists = deleteStatus ? [...artists.filter(artist => artist.id !== newArtistInfo.id)]
@@ -57,8 +43,11 @@ function App() {
     // setArtists([...artists.filter(artist => artist.id !== newArtistInfo.id), newArtistInfo])
   }
 
-  function handleSongsChange(newSongData){
-    setSongs([...songs, newSongData])
+  function handleSongsChange(newOrDeletedData, deleteStatus){
+    deleteStatus ? 
+    setSongs(songs.filter(song => song.id !== newOrDeletedData.id))
+    :
+    setSongs([...songs, newOrDeletedData])
   }
 
 

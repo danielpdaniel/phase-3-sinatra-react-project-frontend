@@ -1,8 +1,8 @@
 :root {
-  --mainColor: cornsilk;
+  --mainColor: hotpink;
   --secondaryColor: rgb(220, 91, 91);
-  --tertiaryColor: cornflowerblue;
-  --accentColor: midnightblue;
+  --tertiaryColor: chartreuse;
+  --accentColor: cornflowerblue;
 }
 
 /* body {
@@ -24,10 +24,12 @@ button, input[type=submit] {
   border: none;
   border-radius: 10px;
   color: var(--tertiaryColor);
-  padding: 8px;
-  font-size: large;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding: 7px;
+  font-size: medium;
+  /* margin-top: 4px;
+  margin-bottom: 4px; */
+  margin: 4px;
+  
   transition: 300ms;
   cursor: pointer;
 }
