@@ -43,15 +43,17 @@ function App() {
     // setArtists([...artists.filter(artist => artist.id !== newArtistInfo.id), newArtistInfo])
   }
 
-  function handleSongsChange(newOrDeletedData, deleteStatus){
-    // deleteStatus ? 
-    // setSongs(songs.filter(song => song.id !== newOrDeletedData.id))
-    // :
-    // setSongs([...songs, newOrDeletedData])
+  function handleSongsEditandDelete(newOrDeletedData, deleteStatus){
     const updatedSongs = deleteStatus ? 
     songs.filter(song => song.id !== newOrDeletedData.id)
     :
     songs.map(song => song.id !== newOrDeletedData.id ? song : newOrDeletedData)
+    setSongs(updatedSongs)
+  }
+
+  function handleNewSong(newSongData){
+    console.log(newSongData)
+    const updatedSongs = [...songs, newSongData]
     setSongs(updatedSongs)
   }
 
@@ -60,7 +62,7 @@ function App() {
     <div>
       <NavBar/>
       <Routes>
-        <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongsChange={handleSongsChange}/>}/>
+        <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongsChange={handleSongsEditandDelete} onNewSong={handleNewSong}/>}/>
         <Route path="/songs/:id" element={<Song artists={artists} />}/>
         <Route path="/artists" element={<ArtistsList artists={artists} onArtistsChange={handleArtistsChange}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} />} />
