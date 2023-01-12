@@ -12,7 +12,7 @@ in the project's directory to install the necessary npm packages. Next, run:
 ```
 npm start
 ``` 
-to start the app in development mode on a local port and open the app in your browser. (You will also need to run a rake server and seed the database so the frontend has a server with data it can talk to! Instructions for that will be in the back end directory's readme!)
+to start the app in development mode on a local port and open the app in your browser. (You will also need to run a rake server and seed the database so the frontend has a server with data it can talk to! Instructions for that will be in the [backend directory's](https://github.com/danielpdaniel/phase-3-sinatra-react-project) readme!)
 
 ## Usage
 
