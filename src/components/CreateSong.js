@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 
 function CreateSong({ artists, onNewSong }){
-    const [newSongTitle, setNewSongTitle] = useState(null)
+    const [newSongTitle, setNewSongTitle] = useState("")
+    const [newSongArtistName, setNewSongArtistName] = useState("")
     const [newSongArtistId, setNewSongArtistId] = useState(null)
-    const [newSongPerformanceLink, setNewSongPerformanceLink] = useState(null)
+    const [newSongPerformanceLink, setNewSongPerformanceLink] = useState("")
 
    function handleFormChange(e){
     const input = e.target.value
@@ -11,7 +12,11 @@ function CreateSong({ artists, onNewSong }){
     if (e.target.name === "newSongTitle"){
         setNewSongTitle(input)
     }else if (e.target.name === "newSongArtist"){
+        input === "Select Artist..." ?
+        setNewSongArtistId(null)
+        :
         setNewSongArtistId(artists.filter(artist => artist.name === input)[0].id)
+        setNewSongArtistName(input)
     }else if (e.target.name === "newSongPerformanceLink"){
         setNewSongPerformanceLink(input)
     }
@@ -41,7 +46,13 @@ function CreateSong({ artists, onNewSong }){
             body: JSON.stringify(postBody)
         })
         .then(r=>r.json())
-        .then(data=>onNewSong(data))
+        .then(data=>{
+            onNewSong(data);
+            setNewSongTitle("");
+            setNewSongArtistId(null);
+            setNewSongArtistName("")
+            setNewSongPerformanceLink("")
+        })
          }
     }
     return (
@@ -49,14 +60,14 @@ function CreateSong({ artists, onNewSong }){
             <h4>Add A Song!</h4>
             <form onSubmit={handleSongSubmit}>
                 <label>Title:</label>
-                <input type="text" name="newSongTitle" onChange={handleFormChange}/>
+                <input type="text" name="newSongTitle" onChange={handleFormChange} value={newSongTitle}/>
                 <label>Artist:</label>
-                <select name="newSongArtist" onChange={handleFormChange}>
+                <select name="newSongArtist" onChange={handleFormChange} value={newSongArtistName}>
                     <option>Select Artist...</option>
                     {artists ? artists.map(artist => <option key={artist.id}>{artist.name}</option>) : <option>Loading...</option>}
                 </select>
                 <label>YouTube Performance Link</label>
-                <input type="text" name="newSongPerformanceLink" onChange={handleFormChange}/>
+                <input type="text" name="newSongPerformanceLink" onChange={handleFormChange} value={newSongPerformanceLink}/>
                 <input type="submit"/>
             </form>
         </div>

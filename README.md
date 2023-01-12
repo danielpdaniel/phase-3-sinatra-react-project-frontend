@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+# Phase 3 Sinatra React Project Front End
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the React frontend for my Phase 3 Project. The project is a single page application centered on musical artists, their songs, and the covers they've done of other artist's songs.
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+Fork and clone, then run: 
+```
+npm install
+```
+in the project's directory to install the necessary npm packages. Next, run:
+```
+npm start
+``` 
+to start the app in development mode on a local port and open the app in your browser. (You will also need to run a rake server and seed the database so the frontend has a server with data it can talk to! Instructions for that will be in the back end directory's readme!)
 
-### `npm start`
+## Usage
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Feel free to play around with it! The app includes full CRUD capabilities for the data related to each artist, their songs and their covers of songs through the various routes within the app.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Credits and Sources
+This app uses [React](https://reactjs.org/) for its frontend,specifically [create-react-app](https://github.com/facebook/create-react-app) to set up the initial starter code for the React program.
 
-### `npm test`
+It also uses [the phase 3 project code by lizbur10 on github](https://github.com/learn-co-curriculum/phase-3-sinatra-react-project) to set up the initial backend directory, which uses both [Sinatra](https://sinatrarb.com/) and [Active Record](https://guides.rubyonrails.org/active_record_basics.html) to build out the database functionality.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+All song performances in the seed data have been sourced from YouTube and can be found at the following locations:
 
-### `npm run build`
+[New York, New York by Frank Sinatra](https://www.youtube.com/watch?v=Y2rDb4Ur2dw)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+[Born This Way by Lady Gaga](https://www.youtube.com/watch?v=xl0N7JM3wZk)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+[New York, New York covered by Lady Gaga](https://www.youtube.com/watch?v=hpiw3cDWmvc)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+[New York, New York covered by Beyoncé](https://www.youtube.com/watch?v=hovCS_wk3Hc)
 
-### `npm run eject`
+[Born This Way covered by Orville Peck](https://www.youtube.com/watch?v=2EOupP5bLnI)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project was done for Phase 3 of the Flatiron School's Software Engineering Flex Program. Special thanks to everyone at Flatiron who helped me through this phase!
