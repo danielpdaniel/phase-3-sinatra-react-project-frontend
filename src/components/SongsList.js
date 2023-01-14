@@ -88,7 +88,19 @@ function SongsList({ artists, songs, onSongsChange, onNewSong }){
                     <ul>
                         {artist.songs.map(song => 
                             <li key={song.id}>
+                            {editStatus === song.id ?
+                            <form onSubmit={handleEditSubmit}>
+                                <label>Song Title:</label>
+                                <input name="titleEdit" type="text" placeholder={song.title} value={songTitleEdit} onChange={handleEditInput}/>
+                                <label>YouTube Performance Link:</label>
+                                <input name ="performanceLinkEdit" type="text" placeholder={song.performance_link} value={songLinkEdit} onChange={handleEditInput}/>
+                                <input type="submit"/>
+                            </form>
+                            :
                             <NavLink to={`/songs/${song.id}`}>{song.title}</NavLink>
+                            }
+                            <button onClick={()=>handleEditClick(song)}>{editStatus === song.id ? "Cancel" : "Edit"}</button>
+                    {editStatus === song.id ? null : <button onClick={()=>handleDeleteSong(song)}>Delete</button>}
                             </li>)}
                     </ul>
                     </li>
