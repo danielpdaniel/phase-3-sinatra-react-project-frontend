@@ -82,7 +82,23 @@ function SongsList({ artists, songs, onSongsChange, onNewSong }){
             <CreateSong artists={artists} onNewSong={onNewSong}/>
             <h3>Songs</h3>
             <ul>
-                {songs ? songs.map(song => 
+                {artists ? 
+                artists.map(artist => 
+                    <li key={artist.id}>{artist.name}:
+                    <ul>
+                        {artist.songs.map(song => 
+                            <li key={song.id}>
+                            <NavLink to={`/songs/${song.id}`}>{song.title}</NavLink>
+                            </li>)}
+                    </ul>
+                    </li>
+                    )
+                :
+                <li>Loading...</li>
+                }
+            </ul>
+            {/* <ul> */}
+                {/* {songs ? songs.map(song => 
                 <li key={song.id}>
                     {
                         editStatus === song.id ?
@@ -94,15 +110,18 @@ function SongsList({ artists, songs, onSongsChange, onNewSong }){
                             <input type="submit"/>
                         </form>
                         :
+                        <div>
+                            <p>{song.artist}:</p>
                         <NavLink to = {`/songs/${song.id}`}>
                         {song.title}
                         </NavLink>
+                        </div>
                     }
                     <button onClick={()=>handleEditClick(song)}>{editStatus === song.id ? "Cancel" : "Edit"}</button>
                     {editStatus === song.id ? null : <button onClick={()=>handleDeleteSong(song)}>Delete</button>}
                 </li>
                     ) : <li>Loading...</li>}
-            </ul>
+            </ul> */}
         </div>
     )
 }
