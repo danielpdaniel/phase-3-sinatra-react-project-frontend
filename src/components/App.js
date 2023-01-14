@@ -66,7 +66,7 @@ function App() {
       <NavBar/>
       <Routes>
         <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongsChange={handleSongsEditandDelete} onNewSong={handleNewSong}/>}/>
-        <Route path="/songs/:id" element={<Song artists={artists} />}/>
+        <Route path="/songs/:id" element={<Song artists={artists} songs={songs}/>}/>
         <Route path="/artists" element={<ArtistsList artists={artists} onArtistsChange={handleArtistsChange}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} />} />
         <Route exact path="/" element={<Home />}/>
