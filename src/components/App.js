@@ -7,6 +7,7 @@ import Song from "./Song";
 import NavBar from './NavBar';
 import ArtistsList from './ArtistsList';
 import Artist from './Artist';
+import Home from './Home';
 
 function App() {
   const [test, setTest] = useState(false);
@@ -60,13 +61,15 @@ function App() {
 
   return (
     <div>
+      <h1>Cover Lover</h1>
+      <h6 className="subHeader">Rub a dub dub love a cover in the tub...</h6>
       <NavBar/>
       <Routes>
         <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongsChange={handleSongsEditandDelete} onNewSong={handleNewSong}/>}/>
         <Route path="/songs/:id" element={<Song artists={artists} />}/>
         <Route path="/artists" element={<ArtistsList artists={artists} onArtistsChange={handleArtistsChange}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} />} />
-        <Route exact path="/" element={<h2>Home!</h2>}/>
+        <Route exact path="/" element={<Home />}/>
       </Routes>
     </div>
   );
