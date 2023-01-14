@@ -44,6 +44,23 @@ function App() {
     // setArtists([...artists.filter(artist => artist.id !== newArtistInfo.id), newArtistInfo])
   }
 
+  function handleNewArtist(newArtistData){
+    const allArtists = [...artists, newArtistData]
+     
+    function compareArtistsId(a, b){
+      if (a.name < b.name){
+        return -1
+      }else if (a.name > b.name) {
+        return 1
+      }else {
+        return 0
+      }
+    }
+    const orderedArtists = allArtists.sort(compareArtistsId);
+
+    setArtists(orderedArtists)
+  }
+
   function handleSongsEditandDelete(newOrDeletedData, deleteStatus){
     const updatedSongs = deleteStatus ? 
     songs.filter(song => song.id !== newOrDeletedData.id)
@@ -53,7 +70,6 @@ function App() {
   }
 
   function handleNewSong(newSongData){
-    console.log(newSongData)
     const updatedSongs = [...songs, newSongData]
     setSongs(updatedSongs)
   }
@@ -67,7 +83,7 @@ function App() {
       <Routes>
         <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongsChange={handleSongsEditandDelete} onNewSong={handleNewSong}/>}/>
         <Route path="/songs/:id" element={<Song artists={artists} />}/>
-        <Route path="/artists" element={<ArtistsList artists={artists} onArtistsChange={handleArtistsChange}/>} />
+        <Route path="/artists" element={<ArtistsList artists={artists} onArtistsChange={handleArtistsChange} onNewArtist={handleNewArtist}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} />} />
         <Route exact path="/" element={<Home />}/>
       </Routes>
