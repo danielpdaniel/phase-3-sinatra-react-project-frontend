@@ -65,7 +65,7 @@ function App() {
       <h6 className="subHeader">Rub a dub dub love a cover in the tub...</h6>
       <NavBar/>
       <Routes>
-        <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongsChange={handleSongsEditandDelete} onNewSong={handleNewSong}/>}/>
+        <Route path="/songs" element={<SongsList artists={artists} onSongsChange={handleSongsEditandDelete} onNewSong={handleNewSong}/>}/>
         <Route path="/songs/:id" element={<Song artists={artists} songs={songs}/>}/>
         <Route path="/artists" element={<ArtistsList artists={artists} onArtistsChange={handleArtistsChange}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} />} />

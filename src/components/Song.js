@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {useParams} from "react-router-dom";
 
-function Song({artists, songs }) {
+function Song({ artists }) {
     const params = useParams()
-    // const [song, setSong] = useState(false);
-
-    const song = songs ? songs.filter(song => song.id === parseInt(params.id, 10))[0] : null;
-
+    const [song, setSong] = useState(false);
     const [covers, setCovers] = useState(false)
    
 
@@ -18,17 +15,10 @@ function Song({artists, songs }) {
     const [performanceLinkEdit, setPerformanceLinkEdit] = useState("")
 
     useEffect(()=>{
-        if(song){
-            setCovers(song.covers)
-        }else{
-            setCovers(false)
-        }
-    }, [song])
-    // useEffect(()=>{
-    // fetch(`http://localhost:9292/songs/${params.id}`)
-    // .then(r=>r.json())
-    // .then(data=>{setSong(data); setCovers(data.covers)})}
-    // , [])    
+    fetch(`http://localhost:9292/songs/${params.id}`)
+    .then(r=>r.json())
+    .then(data=>{setSong(data); setCovers(data.covers)})}
+    , [])    
 
     function handleFormClick(e, cover){
        if(e.target.name === "new_cover_btn"){
