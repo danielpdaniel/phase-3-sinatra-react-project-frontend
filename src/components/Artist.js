@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 function Artist({artists}) {
     const params = useParams()
@@ -14,7 +14,7 @@ function Artist({artists}) {
             <ul>
             {artist ? artist.songs.map(song => 
                 <li key={song.id}>
-                    {song.title}
+                    <NavLink to={`/songs/${song.id}`}>{song.title}</NavLink>
                 </li>) : 
                 <li>Loading...</li>}
             </ul>
@@ -22,7 +22,8 @@ function Artist({artists}) {
             <ul>
             {artist ? artist.covers.map(cover => 
                 <li key={`cover${cover.id}`}>
-                    {cover.song.title}
+                    <NavLink to={`/songs/${cover.song_id}`}>{cover.song.title}</NavLink>
+                    <p>originally by {cover.song.artist.name}</p>
                 </li>) : 
                 <li>Loading...</li>}
             </ul>

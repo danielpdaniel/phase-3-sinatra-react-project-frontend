@@ -26,22 +26,15 @@ function App() {
   }, [])
 
   function handleArtistsChange(newArtistInfo, deleteStatus){
-    const allArtists = deleteStatus ? [...artists.filter(artist => artist.id !== newArtistInfo.id)]
-    :
-    artists.map(artist => artist.id === newArtistInfo.id ? newArtistInfo : artist)
-    // [...artists.filter(artist => artist.id !== newArtistInfo.id), newArtistInfo]
-    // function compareArtistsId(a, b){
-    //   if (a.name < b.name){
-    //     return -1
-    //   }else if (a.name > b.name) {
-    //     return 1
-    //   }else {
-    //     return 0
-    //   }
-    // }
-    // const orderedArtists = allArtists.sort(compareArtistsId);
-    setArtists(allArtists)
-    // setArtists([...artists.filter(artist => artist.id !== newArtistInfo.id), newArtistInfo])
+    if(deleteStatus){
+      const allArtists = [...artists.filter(artist => artist.id !== newArtistInfo.id)]
+      setArtists(allArtists)
+      const allSongs = [...songs.filter(song => song.artist_id !== newArtistInfo.id)]
+      setSongs(allSongs)
+    }else {
+      const allArtists = artists.map(artist => artist.id === newArtistInfo.id ? newArtistInfo : artist)
+      setArtists(allArtists)
+    }
   }
 
   function handleNewArtist(newArtistData){
@@ -67,11 +60,21 @@ function App() {
     :
     songs.map(song => song.id !== newOrDeletedData.id ? song : newOrDeletedData)
     setSongs(updatedSongs)
+
+    if(deleteStatus){
+    // const artistToEdit = artists.filter(artist => artist.id === newOrDeletedData.artist_id)[0]
+    // const artistToEditFilteredSongs = artistToEdit.songs.filter(song => song.id !== newOrDeletedData.id)
+
+    const updatedArtists = artists.map(artist => artist.id !== newOrDeletedData.artist_id ? artist : newOrDeletedData.artist)
+    setArtists(updatedArtists)
+  
+    }
   }
 
   function handleNewSong(newSongData){
     const updatedSongs = [...songs, newSongData]
     setSongs(updatedSongs)
+    const allArtists = artists.map(artist => artist.id !== newSongData.artist.id ? artist : artist.songs = [...artist.songs, newSongData])
   }
 
 
