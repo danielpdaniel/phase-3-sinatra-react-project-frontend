@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {useParams} from "react-router-dom";
 
-function Song({ artists }) {
+function Song({ artists, onCoverDelete, onNewCover }) {
     const params = useParams()
     const [song, setSong] = useState(false);
     const [covers, setCovers] = useState(false)
@@ -70,7 +70,13 @@ function Song({ artists }) {
             body: JSON.stringify(postBody)
         })
         .then(r=>r.json())
-        .then(data=>{setCovers([...covers, data]);})
+        .then(data=>{
+            onNewCover(data)
+            setCovers([...covers, data]);
+            setEditStatus(null);
+            setPerformanceLinkEdit("")
+            setFormStatus(false)
+        })
     }
 
     function handlePerformanceLinkEdit(e){
@@ -110,9 +116,9 @@ function Song({ artists }) {
         })
         .then(r=>r.json())
         .then(data=>{
-            console.log(data)
            const nonDeletedCovers = covers.filter(cover => cover.id !== data.id)
             setCovers(nonDeletedCovers)
+            onCoverDelete(data)
         })
     }
 
@@ -132,7 +138,7 @@ function Song({ artists }) {
                         <label>Artist</label>
                         <br></br>
                         <select onChange={handleArtistSelection}>
-                            <option>Select Arist...</option>
+                            <option>Select Artist...</option>
                             {artists.map(artist => <option key={artist.id} value={artist.name}>{artist.name}</option>)}
                         </select>
                         {/* <input type="text" name="artist" onChange={handleArtistSearch} value={artistSearchTerm}/>
