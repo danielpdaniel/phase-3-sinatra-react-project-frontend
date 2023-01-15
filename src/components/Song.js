@@ -25,26 +25,8 @@ function Song({ artists, onCoverDelete, onNewCover }) {
         setFormStatus(formStatus => !formStatus)
        }else {
         editStatus !== cover.id ? setEditStatus(cover.id) : setEditStatus(null);
-        // setPerformanceLinkEdit(cover.artist.name)
        }
     }
-
-    // function handleArtistSearch(e){
-    //     if (e.target.value === ""){
-    //         setArtistSearchTerm("")
-    //         setFilteredArtists(false)
-    //     }else{
-    //    const searchValue = e.target.value
-    //     setArtistSearchTerm(searchValue)
-    //     setFilteredArtists(true)
-    //     }
-    // }
-
-    // function handleArtistClick(artist) {
-    //     setFormArtist(artist)
-    //     setArtistSearchTerm(artist.name)
-    //     setFilteredArtists(false)
-    // }
 
     function handleArtistSelection(e){
         const artist = artists.filter(artist => artist.name === e.target.value)[0]
@@ -141,12 +123,8 @@ function Song({ artists, onCoverDelete, onNewCover }) {
                             <option>Select Artist...</option>
                             {artists.map(artist => <option key={artist.id} value={artist.name}>{artist.name}</option>)}
                         </select>
-                        {/* <input type="text" name="artist" onChange={handleArtistSearch} value={artistSearchTerm}/>
-                        <div className="dropdown">
-                        {filteredArtists ? artists.map(artist => artist.name.toUpperCase().includes(artistSearchTerm.toUpperCase()) ? <p key={artist.id} onClick={()=>handleArtistClick(artist)}>{artist.name}</p> : null) : null} */}
-                        {/* </div> */}
                         <br></br>
-                        <label>YouTube link</label>
+                        <label>YouTube link:</label>
                         <br></br>
                         <input type="text" name="performance_link" onChange={handleInputChange}/>
                         <input type="submit"/>

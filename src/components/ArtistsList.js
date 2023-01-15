@@ -64,7 +64,6 @@ function ArtistsList({ artists, onArtistsChange, onNewArtist }) {
                 {editStatus ? null : <button onClick={()=>handleDelete(artist)}>Delete</button>}
             </li>)
              : <h4>Loading...</h4>}
-        {/* </ul> */}
         </div>
     )
 }

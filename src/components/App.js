@@ -62,8 +62,6 @@ function App() {
     setSongs(updatedSongs)
 
     if(deleteStatus){
-    // const artistToEdit = artists.filter(artist => artist.id === newOrDeletedData.artist_id)[0]
-    // const artistToEditFilteredSongs = artistToEdit.songs.filter(song => song.id !== newOrDeletedData.id)
 
     const updatedArtists = artists.map(artist => artist.id !== newOrDeletedData.artist_id ? artist : newOrDeletedData.artist)
     setArtists(updatedArtists)

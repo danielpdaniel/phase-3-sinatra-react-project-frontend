@@ -8,7 +8,6 @@ function CreateSong({ artists, onNewSong }){
 
    function handleFormChange(e){
     const input = e.target.value
-    // e.target.name === "newSongTitle" ? setNewSongTitle(input) : setNewSongArtistId(artists.filter(artist => artist.name === input)[0].id)
     if (e.target.name === "newSongTitle"){
         setNewSongTitle(input)
     }else if (e.target.name === "newSongArtist"){
