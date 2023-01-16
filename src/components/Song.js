@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {useParams} from "react-router-dom";
 
-function Song({ artists, onCoverDelete, onNewCover }) {
+function Song({ artists, songs, onCoverUpdate }) {
     const params = useParams()
-    const [song, setSong] = useState(false);
-    const [covers, setCovers] = useState(false)
-   
+    // const [song, setSong] = useState(songs ? songs[0] : false);
+    const song = songs ? songs.filter(song => song.id === parseInt(params.id, 10))[0] : false;
+    // const [covers, setCovers] = useState(song ? song.covers : null);
+    const covers = song ? song.covers : false;
 
     const [formStatus, setFormStatus] = useState(false);
     const [formArtist, setFormArtist] = useState(false);
@@ -14,11 +15,11 @@ function Song({ artists, onCoverDelete, onNewCover }) {
     const [editStatus, setEditStatus] = useState(null)
     const [performanceLinkEdit, setPerformanceLinkEdit] = useState("")
 
-    useEffect(()=>{
-    fetch(`http://localhost:9292/songs/${params.id}`)
-    .then(r=>r.json())
-    .then(data=>{setSong(data); setCovers(data.covers)})}
-    , [])    
+    // useEffect(()=>{
+    // fetch(`http://localhost:9292/songs/${params.id}`)
+    // .then(r=>r.json())
+    // .then(data=>{setSong(data); setCovers(data.covers)})}
+    // , [])    
 
     function handleFormClick(e, cover){
        if(e.target.name === "new_cover_btn"){
@@ -53,8 +54,8 @@ function Song({ artists, onCoverDelete, onNewCover }) {
         })
         .then(r=>r.json())
         .then(data=>{
-            onNewCover(data)
-            setCovers([...covers, data]);
+            onCoverUpdate(data)
+            // setCovers([...covers, data]);
             setEditStatus(null);
             setPerformanceLinkEdit("")
             setFormStatus(false)
@@ -83,7 +84,8 @@ function Song({ artists, onCoverDelete, onNewCover }) {
         .then(r=>r.json())
         .then(data=>{
             const newCovers = covers.filter(cover => cover.artist.id !== data.artist.id)
-            setCovers([...newCovers, data])
+            // setCovers([...newCovers, data])
+            onCoverUpdate(data)
             setEditStatus(null)
             setPerformanceLinkEdit("")
         })
@@ -99,8 +101,9 @@ function Song({ artists, onCoverDelete, onNewCover }) {
         .then(r=>r.json())
         .then(data=>{
            const nonDeletedCovers = covers.filter(cover => cover.id !== data.id)
-            setCovers(nonDeletedCovers)
-            onCoverDelete(data)
+            // setCovers(nonDeletedCovers)
+            // onCoverDelete(data)
+            onCoverUpdate(data)
         })
     }
 

@@ -70,14 +70,14 @@ function App() {
     }
   }
 
-  function handleCoverDelete(deletedCoverData){
-    const updatedArtists = artists.map(artist => artist.id !== deletedCoverData.artist_id ? artist : deletedCoverData.artist)
-    setArtists(updatedArtists)
-  }
+  function handleCoverUpdate(coverData){
+    const updatedArtists = artists.map(artist => artist.id !== coverData.song.artist.id ? artist : coverData.song.artist)
+    const updatedCoverArtist = updatedArtists.map(artist => artist.id !== coverData.artist_id ? artist : coverData.artist)
+    setArtists(updatedCoverArtist)
+    
 
-  function handleNewCover(newCoverData){
-    const updatedArtists = artists.map(artist => artist.id !== newCoverData.artist_id ? artist : newCoverData.artist)
-    setArtists(updatedArtists)
+    const updatedSongs = songs.map(song => song.id !== coverData.song_id ? song : coverData.song)
+    setSongs(updatedSongs)
   }
 
   function handleNewSong(newSongData){
@@ -94,7 +94,7 @@ function App() {
       <NavBar/>
       <Routes>
         <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongsChange={handleSongsEditandDelete} onNewSong={handleNewSong}/>}/>
-        <Route path="/songs/:id" element={<Song artists={artists} onCoverDelete={handleCoverDelete} onNewCover={handleNewCover}/>}/>
+        <Route path="/songs/:id" element={<Song artists={artists} songs={songs} onCoverUpdate={handleCoverUpdate}/>}/>
         <Route path="/artists" element={<ArtistsList artists={artists} onArtistsChange={handleArtistsChange} onNewArtist={handleNewArtist}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} />} />
         <Route exact path="/" element={<Home />}/>
