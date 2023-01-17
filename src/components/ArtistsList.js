@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import CreateArtist from './CreateArtist';
 
-function ArtistsList({ artists, onArtistsChange, onNewArtist, onArtistUpdate }) {
+function ArtistsList({ artists, onArtistUpdate }) {
     const [editStatus, setEditStatus] = useState(null);
     const [artistNameEdit, setArtistNameEdit] = useState(null)
     
@@ -51,7 +51,7 @@ function ArtistsList({ artists, onArtistsChange, onNewArtist, onArtistUpdate }) 
     }
     return (
         <div>
-            <CreateArtist artists={artists} onNewArtist={onNewArtist} onArtistUpdate={onArtistUpdate}/>
+            <CreateArtist artists={artists} onArtistUpdate={onArtistUpdate}/>
         <h2>Artists!</h2>
         {/* <ul> */}
         {artists ? artists.map(artist =>

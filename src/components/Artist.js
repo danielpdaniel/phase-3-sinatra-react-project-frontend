@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 
-function Artist({artists}) {
+function Artist({artists, songs}) {
     const params = useParams()
 
     const artist = artists ? artists.filter(artist => artist.id === parseInt(params.id, 10))[0] : false;
+    const artistSongs = songs ? songs.filter(song => song.artist_id === parseInt(params.id, 10)) : false;
   
     return(
         <div>
             <h2>{artist ? artist.name : "Loading..."}</h2>
             <h3>Songs:</h3>
             <ul>
-            {artist ? artist.songs.map(song => 
+            {artistSongs ? artistSongs.map(song => 
                 <li key={song.id}>
                     <NavLink to={`/songs/${song.id}`}>{song.title}</NavLink>
                 </li>) : 

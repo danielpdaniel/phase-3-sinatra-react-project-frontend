@@ -7,7 +7,6 @@ function Song({ artists, songs, onCoverUpdate }) {
     const song = songs ? songs.filter(song => song.id === parseInt(params.id, 10))[0] : false;
     // const [covers, setCovers] = useState(song ? song.covers : null);
     const covers = songs ? songs.filter(song => song.id === parseInt(params.id, 10))[0].covers : false;
-
     const [formStatus, setFormStatus] = useState(false);
     const [formArtist, setFormArtist] = useState(false);
     const [formPerformanceLink, setFormPerformanceLink] = useState(false);
@@ -99,7 +98,6 @@ function Song({ artists, songs, onCoverUpdate }) {
             // setCovers(nonDeletedCovers)
             // onCoverDelete(data)
             onCoverUpdate(data)
-            console.log(data)
         })
     }
 

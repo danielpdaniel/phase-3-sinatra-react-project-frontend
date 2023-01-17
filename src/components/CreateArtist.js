@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 
-function CreateArtist({artists, onNewArtist, onArtistUpdate}) {
+function CreateArtist({artists, onArtistUpdate}) {
     const [newArtistName, setNewArtistName] = useState("")
 
     function handleNewArtistInput(e){
@@ -23,7 +23,6 @@ function CreateArtist({artists, onNewArtist, onArtistUpdate}) {
         })
         .then(r=>r.json())
         .then(data=>{
-            // onNewArtist(data)
             setNewArtistName("")
             onArtistUpdate(data)
         })
