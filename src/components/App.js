@@ -49,23 +49,6 @@ function App() {
     }
   }
 
-  // function handleNewArtist(newArtistData){
-  //   const allArtists = [...artists, newArtistData]
-     
-  //   function compareArtistsId(a, b){
-  //     if (a.name < b.name){
-  //       return -1
-  //     }else if (a.name > b.name) {
-  //       return 1
-  //     }else {
-  //       return 0
-  //     }
-  //   }
-  //   const orderedArtists = allArtists.sort(compareArtistsId);
-
-  //   setArtists(orderedArtists)
-  // }
-
   function handleSongUpdate(songData){
     console.log(songData)
     const updatedArtists = artists.map(artist => artist.id !== songData.artist.id ? artist : songData.artist)
@@ -78,31 +61,6 @@ function App() {
 
   }
 
-  function handleFetchDataInState(data){
-    const updatedArtists = artists.map (artist => artist.id !== data.artist.id ? artist : data.artist)
-    const updatedSongs = []
-    updatedArtists.forEach(artist => Boolean(artist.songs) ? artist.songs.forEach(song => updatedSongs.push(song)) : null)
-
-    setArtists(updatedArtists);
-    setSongs(updatedSongs);
-  }
-
-  // function handleSongsEditandDelete(newOrDeletedData, deleteStatus){
-  //   const updatedSongs = deleteStatus ? 
-  //   songs.filter(song => song.id !== newOrDeletedData.id)
-  //   :
-  //   songs.map(song => song.id !== newOrDeletedData.id ? song : newOrDeletedData)
-  //   setSongs(updatedSongs)
-
-  //   if(deleteStatus){
-
-  //   const updatedArtists = artists.map(artist => artist.id !== newOrDeletedData.artist_id ? artist : newOrDeletedData.artist)
-  //   setArtists(updatedArtists)
-  //   console.log(updatedArtists)
-  
-  //   }
-  // }
-
   function handleCoverUpdate(coverData){
     const updatedArtists = artists.map(artist => artist.id !== coverData.song.artist.id ? artist : coverData.song.artist)
     const updatedCoverArtist = updatedArtists.map(artist => artist.id !== coverData.artist_id ? artist : coverData.artist)
@@ -114,12 +72,14 @@ function App() {
     setSongs(updatedSongs)
   }
 
-  // function handleNewSong(newSongData){
-  //   const updatedSongs = [...songs, newSongData]
-  //   setSongs(updatedSongs)
-  //   const allArtists = artists.map(artist => artist.id !== newSongData.artist.id ? artist : artist.songs = [...artist.songs, newSongData])
-  // }
+    // function handleFetchDataInState(data){
+  //   const updatedArtists = artists.map (artist => artist.id !== data.artist.id ? artist : data.artist)
+  //   const updatedSongs = []
+  //   updatedArtists.forEach(artist => Boolean(artist.songs) ? artist.songs.forEach(song => updatedSongs.push(song)) : null)
 
+  //   setArtists(updatedArtists);
+  //   setSongs(updatedSongs);
+  // }
 
   return (
     <div>
