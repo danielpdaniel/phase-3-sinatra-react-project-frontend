@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import CreateArtist from './CreateArtist';
 
-function ArtistsList({ artists, onArtistsChange, onNewArtist }) {
+function ArtistsList({ artists, onArtistsChange, onNewArtist, onArtistUpdate }) {
     const [editStatus, setEditStatus] = useState(null);
     const [artistNameEdit, setArtistNameEdit] = useState(null)
     
@@ -29,7 +29,11 @@ function ArtistsList({ artists, onArtistsChange, onNewArtist }) {
             body: JSON.stringify(patchBody)
         })
         .then(r=>r.json())
-        .then(data=>{onArtistsChange(data); setEditStatus(null); setArtistNameEdit(null)})
+        .then(data=>{
+            // onArtistsChange(data);
+            setEditStatus(null);
+            setArtistNameEdit(null); 
+            onArtistUpdate(data)})
     }
 
     function handleDelete(artist){
@@ -41,12 +45,13 @@ function ArtistsList({ artists, onArtistsChange, onNewArtist }) {
         })
         .then(r=>r.json())
         .then(data=>{
-            onArtistsChange(data, true)
+            // onArtistsChange(data, true)
+            onArtistUpdate(data, true)
         })
     }
     return (
         <div>
-            <CreateArtist artists={artists} onNewArtist={onNewArtist}/>
+            <CreateArtist artists={artists} onNewArtist={onNewArtist} onArtistUpdate={onArtistUpdate}/>
         <h2>Artists!</h2>
         {/* <ul> */}
         {artists ? artists.map(artist =>

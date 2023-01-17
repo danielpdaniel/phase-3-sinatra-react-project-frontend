@@ -6,7 +6,7 @@ function Song({ artists, songs, onCoverUpdate }) {
     // const [song, setSong] = useState(songs ? songs[0] : false);
     const song = songs ? songs.filter(song => song.id === parseInt(params.id, 10))[0] : false;
     // const [covers, setCovers] = useState(song ? song.covers : null);
-    const covers = song ? song.covers : false;
+    const covers = songs ? songs.filter(song => song.id === parseInt(params.id, 10))[0].covers : false;
 
     const [formStatus, setFormStatus] = useState(false);
     const [formArtist, setFormArtist] = useState(false);
@@ -14,12 +14,6 @@ function Song({ artists, songs, onCoverUpdate }) {
 
     const [editStatus, setEditStatus] = useState(null)
     const [performanceLinkEdit, setPerformanceLinkEdit] = useState("")
-
-    // useEffect(()=>{
-    // fetch(`http://localhost:9292/songs/${params.id}`)
-    // .then(r=>r.json())
-    // .then(data=>{setSong(data); setCovers(data.covers)})}
-    // , [])    
 
     function handleFormClick(e, cover){
        if(e.target.name === "new_cover_btn"){
@@ -55,6 +49,7 @@ function Song({ artists, songs, onCoverUpdate }) {
         .then(r=>r.json())
         .then(data=>{
             onCoverUpdate(data)
+            console.log(data)
             // setCovers([...covers, data]);
             setEditStatus(null);
             setPerformanceLinkEdit("")
@@ -104,6 +99,7 @@ function Song({ artists, songs, onCoverUpdate }) {
             // setCovers(nonDeletedCovers)
             // onCoverDelete(data)
             onCoverUpdate(data)
+            console.log(data)
         })
     }
 

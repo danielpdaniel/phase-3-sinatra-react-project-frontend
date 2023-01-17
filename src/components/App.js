@@ -25,6 +25,31 @@ function App() {
     })
   }, [])
 
+  function handleArtistUpdate(artistData, deleteStatus){
+    console.log(artistData)
+    if(!deleteStatus){
+    const objToEdit = artists.filter(artist => artist.id === artistData.id)[0]
+    const updatedArtists = objToEdit ? artists.map(artist => artist.id !== artistData.id ? artist : artistData) : [...artists, artistData]
+    setArtists(updatedArtists)
+    }else {
+      const updatedArtists = artists.filter(artist => artist.id !== artistData.id)
+    
+      setArtists(updatedArtists)
+      
+      const updatedSongs = songs.filter(song => song.artist_id !== artistData.id)
+      
+      const updatedSongsDeletedArtistsCoversRemoved = updatedSongs.map(song => {
+        const theseCovers = song.covers.filter(cover => cover.artist_id !== artistData.id)
+        const thisSong = song
+        thisSong.covers = theseCovers
+        return thisSong
+      })
+      
+      setSongs(updatedSongsDeletedArtistsCoversRemoved)
+
+    }
+  }
+
   function handleArtistsChange(newArtistInfo, deleteStatus){
     if(deleteStatus){
       const allArtists = [...artists.filter(artist => artist.id !== newArtistInfo.id)]
@@ -74,6 +99,7 @@ function App() {
     const updatedArtists = artists.map(artist => artist.id !== coverData.song.artist.id ? artist : coverData.song.artist)
     const updatedCoverArtist = updatedArtists.map(artist => artist.id !== coverData.artist_id ? artist : coverData.artist)
     setArtists(updatedCoverArtist)
+    console.log(updatedCoverArtist)
     
 
     const updatedSongs = songs.map(song => song.id !== coverData.song_id ? song : coverData.song)
@@ -95,7 +121,7 @@ function App() {
       <Routes>
         <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongsChange={handleSongsEditandDelete} onNewSong={handleNewSong}/>}/>
         <Route path="/songs/:id" element={<Song artists={artists} songs={songs} onCoverUpdate={handleCoverUpdate}/>}/>
-        <Route path="/artists" element={<ArtistsList artists={artists} onArtistsChange={handleArtistsChange} onNewArtist={handleNewArtist}/>} />
+        <Route path="/artists" element={<ArtistsList artists={artists} onArtistsChange={handleArtistsChange} onNewArtist={handleNewArtist} onArtistUpdate = {handleArtistUpdate}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} />} />
         <Route exact path="/" element={<Home />}/>
       </Routes>
