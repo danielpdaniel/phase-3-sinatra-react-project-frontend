@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import CreateArtist from './CreateArtist';
 
-function ArtistsList({ artists, onArtistUpdate, onNewArtist }) {
+function ArtistsList({ artists, onArtistUpdate, onNewArtist, onEditArtist, onDeleteArtist }) {
     const [editStatus, setEditStatus] = useState(null);
     const [artistNameEdit, setArtistNameEdit] = useState(null)
     
@@ -33,7 +33,9 @@ function ArtistsList({ artists, onArtistUpdate, onNewArtist }) {
             // onArtistsChange(data);
             setEditStatus(null);
             setArtistNameEdit(null); 
-            onArtistUpdate(data)})
+            // onArtistUpdate(data);
+            onEditArtist(data)
+        })
     }
 
     function handleDelete(artist){
@@ -46,7 +48,8 @@ function ArtistsList({ artists, onArtistUpdate, onNewArtist }) {
         .then(r=>r.json())
         .then(data=>{
             // onArtistsChange(data, true)
-            onArtistUpdate(data, true)
+            // onArtistUpdate(data, true)
+            onDeleteArtist(data)
         })
     }
     return (

@@ -41,6 +41,16 @@ function App() {
     setArtists(updatedArtistsSortedByName)
   }
 
+  function handleEditArtist(artistData){
+    const updatedArtists = artists.map(artist => artist.id !== artistData.id ? artist : artistData);
+    setArtists(updatedArtists)
+  }
+
+  function handleDeleteArtist(artistData){
+    const updatedArtists = artists.filter(artist => artist.id !== artistData.id)
+    setArtists(updatedArtists)
+  }
+
   function handleArtistUpdate(artistData, deleteStatus){
     console.log(artistData)
     if(!deleteStatus){
@@ -105,7 +115,7 @@ function App() {
       <Routes>
         <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongUpdate={handleSongUpdate}/>}/>
         <Route path="/songs/:id" element={<Song artists={artists} songs={songs} onCoverUpdate={handleCoverUpdate}/>}/>
-        <Route path="/artists" element={<ArtistsList artists={artists} onArtistUpdate = {handleArtistUpdate} onNewArtist={handleNewArtist}/>} />
+        <Route path="/artists" element={<ArtistsList artists={artists} onArtistUpdate = {handleArtistUpdate} onNewArtist={handleNewArtist} onEditArtist={handleEditArtist} onDeleteArtist={handleDeleteArtist}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} songs={songs}/>} />
         <Route exact path="/" element={<Home />}/>
       </Routes>
