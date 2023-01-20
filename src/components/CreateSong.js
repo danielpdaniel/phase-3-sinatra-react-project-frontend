@@ -66,7 +66,7 @@ function CreateSong({ artists, onNewSong, onSongUpdate }){
                     <option>Select Artist...</option>
                     {artists ? artists.map(artist => <option key={artist.id}>{artist.name}</option>) : <option>Loading...</option>}
                 </select>
-                <label>YouTube Performance Link</label>
+                <label>YouTube Performance Link:</label>
                 <input type="text" name="newSongPerformanceLink" onChange={handleFormChange} value={newSongPerformanceLink}/>
                 <input type="submit"/>
             </form>

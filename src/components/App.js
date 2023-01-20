@@ -78,11 +78,34 @@ function App() {
   function handleNewSong(songData){
     const updatedSongs = [...songs, songData]
     setSongs(updatedSongs)
+  
     const updatedArtists = artists.map(artist => {
       if (artist.id === songData.artist_id){
         return { ...artist,
         songs: [...artist.songs, songData]
       }
+      }else {
+        return artist
+      }
+    })
+    setArtists(updatedArtists)
+  }
+
+  function handleEditSong(songData){
+    const updatedSongs = songs.map(song => song.id !== songData.id ? song : songData);
+    setSongs(updatedSongs)
+
+    const updatedArtists = artists.map(artist => {
+      if(artist.id === songData.artist_id){
+        return {...artist,
+        songs: artist.songs.map(song => {
+          if(song.id === songData.id){
+            return songData
+          }else {
+            return song
+          }
+        })
+        }
       }else {
         return artist
       }
@@ -128,7 +151,7 @@ function App() {
       <h6 className="subHeader">Rub a dub dub love a cover in the tub...</h6>
       <NavBar/>
       <Routes>
-        <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongUpdate={handleSongUpdate} onNewSong ={handleNewSong}/>}/>
+        <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongUpdate={handleSongUpdate} onNewSong ={handleNewSong} onEditSong={handleEditSong}/>}/>
         <Route path="/songs/:id" element={<Song artists={artists} songs={songs} onCoverUpdate={handleCoverUpdate}/>}/>
         <Route path="/artists" element={<ArtistsList artists={artists} onNewArtist={handleNewArtist} onEditArtist={handleEditArtist} onDeleteArtist={handleDeleteArtist}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} songs={songs}/>} />

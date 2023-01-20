@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 import CreateSong from "./CreateSong";
 
-function SongsList({ artists, songs, onNewSong, onSongUpdate }){
+function SongsList({ artists, songs, onNewSong, onSongUpdate, onEditSong }){
     // const [songs, setSongs] = useState(false)
     const [editStatus, setEditStatus] = useState(false)
     const [songTitleEdit, setSongTitleEdit] = useState(false)
@@ -52,8 +52,8 @@ function SongsList({ artists, songs, onNewSong, onSongUpdate }){
         .then(r=>r.json())
         .then(data=>{
             // onSongsChange(data)
-            onSongUpdate(data)
-            setEditStatus(false)
+            onEditSong(data);
+            setEditStatus(false);
         })
         }
     }
