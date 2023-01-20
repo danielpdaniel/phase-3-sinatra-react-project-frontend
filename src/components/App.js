@@ -51,28 +51,43 @@ function App() {
     setArtists(updatedArtists)
   }
 
-  function handleArtistUpdate(artistData, deleteStatus){
-    console.log(artistData)
-    if(!deleteStatus){
-    const objToEdit = artists.filter(artist => artist.id === artistData.id)[0]
-    const updatedArtists = objToEdit ? artists.map(artist => artist.id !== artistData.id ? artist : artistData) : [...artists, artistData]
-    setArtists(updatedArtists)
-    }else {
-      const updatedArtists = artists.filter(artist => artist.id !== artistData.id)
+  // function handleArtistUpdate(artistData, deleteStatus){
+  //   console.log(artistData)
+  //   if(!deleteStatus){
+  //   const objToEdit = artists.filter(artist => artist.id === artistData.id)[0]
+  //   const updatedArtists = objToEdit ? artists.map(artist => artist.id !== artistData.id ? artist : artistData) : [...artists, artistData]
+  //   setArtists(updatedArtists)
+  //   }else {
+  //     const updatedArtists = artists.filter(artist => artist.id !== artistData.id)
     
-      setArtists(updatedArtists)
+  //     setArtists(updatedArtists)
       
-      const updatedSongs = songs.filter(song => song.artist_id !== artistData.id)
+  //     const updatedSongs = songs.filter(song => song.artist_id !== artistData.id)
       
-      const updatedSongsDeletedArtistsCoversRemoved = updatedSongs.map(song => {
-        const theseCovers = song.covers.filter(cover => cover.artist_id !== artistData.id)
-        const thisSong = song
-        thisSong.covers = theseCovers
-        return thisSong
-      })
+  //     const updatedSongsDeletedArtistsCoversRemoved = updatedSongs.map(song => {
+  //       const theseCovers = song.covers.filter(cover => cover.artist_id !== artistData.id)
+  //       const thisSong = song
+  //       thisSong.covers = theseCovers
+  //       return thisSong
+  //     })
       
-      setSongs(updatedSongsDeletedArtistsCoversRemoved)
-    }
+  //     setSongs(updatedSongsDeletedArtistsCoversRemoved)
+  //   }
+  // }
+
+  function handleNewSong(songData){
+    const updatedSongs = [...songs, songData]
+    setSongs(updatedSongs)
+    const updatedArtists = artists.map(artist => {
+      if (artist.id === songData.artist_id){
+        return { ...artist,
+        songs: [...artist.songs, songData]
+      }
+      }else {
+        return artist
+      }
+    })
+    setArtists(updatedArtists)
   }
 
   function handleSongUpdate(songData){
@@ -113,9 +128,9 @@ function App() {
       <h6 className="subHeader">Rub a dub dub love a cover in the tub...</h6>
       <NavBar/>
       <Routes>
-        <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongUpdate={handleSongUpdate}/>}/>
+        <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongUpdate={handleSongUpdate} onNewSong ={handleNewSong}/>}/>
         <Route path="/songs/:id" element={<Song artists={artists} songs={songs} onCoverUpdate={handleCoverUpdate}/>}/>
-        <Route path="/artists" element={<ArtistsList artists={artists} onArtistUpdate = {handleArtistUpdate} onNewArtist={handleNewArtist} onEditArtist={handleEditArtist} onDeleteArtist={handleDeleteArtist}/>} />
+        <Route path="/artists" element={<ArtistsList artists={artists} onNewArtist={handleNewArtist} onEditArtist={handleEditArtist} onDeleteArtist={handleDeleteArtist}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} songs={songs}/>} />
         <Route exact path="/" element={<Home />}/>
       </Routes>

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 
-function CreateArtist({artists, onArtistUpdate, onNewArtist}) {
+function CreateArtist({ onNewArtist }) {
     const [newArtistName, setNewArtistName] = useState("")
 
     function handleNewArtistInput(e){

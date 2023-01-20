@@ -46,8 +46,8 @@ function CreateSong({ artists, onNewSong, onSongUpdate }){
         })
         .then(r=>r.json())
         .then(data=>{
-            // onNewSong(data);
-            onSongUpdate(data);
+            onNewSong(data);
+            // onSongUpdate(data);
             setNewSongTitle("");
             setNewSongArtistId(null);
             setNewSongArtistName("")

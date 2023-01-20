@@ -73,7 +73,7 @@ function SongsList({ artists, songs, onNewSong, onSongUpdate }){
 
     return (
         <div>
-            <CreateSong artists={artists} onSongUpdate={onSongUpdate} />
+            <CreateSong artists={artists} onSongUpdate={onSongUpdate} onNewSong={onNewSong}/>
             <h3>Songs</h3>
             <ul>
                 {songs ? songs.map(song => 
