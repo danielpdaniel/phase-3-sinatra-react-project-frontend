@@ -14,9 +14,6 @@ function App() {
   const [artists, setArtists] = useState(false);
   const [songs, setSongs] = useState(false);
 
-  console.log(songs)
-  console.log(artists)
-
   useEffect(()=>{
     fetch("http://localhost:9292/artists")
     .then(r=>r.json())
@@ -134,7 +131,15 @@ function App() {
 
   function handleDeleteSong(songData){
     const updatedSongs = songs.filter(song => song.id !== songData.id)
+
+    const updatedArtists = artists.map(artist => {
+      return {...artist,
+        songs: [...artist.songs.filter(song => song.id !== songData.id)],
+        covers: [...artist.covers.filter(cover => cover.song_id !== songData.id)]
+      }
+    })
     setSongs(updatedSongs)
+    setArtists(updatedArtists)
   }
 
   // function handleSongUpdate(songData){
@@ -289,7 +294,7 @@ function App() {
       <NavBar/>
       <Routes>
         <Route path="/songs" element={<SongsList artists={artists} songs={songs} onNewSong ={handleNewSong} onEditSong={handleEditSong} onDeleteSong={handleDeleteSong}/>}/>
-        <Route path="/songs/:id" element={<Song artists={artists} songs={songs} onCoverUpdate={handleCoverUpdate} onNewCover={handleNewCover} onEditCover={handleEditCover} onDeleteCover={handleDeleteCover}/>}/>
+        <Route path="/songs/:id" element={<Song artists={artists} songs={songs} onNewCover={handleNewCover} onEditCover={handleEditCover} onDeleteCover={handleDeleteCover}/>}/>
         <Route path="/artists" element={<ArtistsList artists={artists} onNewArtist={handleNewArtist} onEditArtist={handleEditArtist} onDeleteArtist={handleDeleteArtist}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} songs={songs}/>} />
         <Route exact path="/" element={<Home />}/>

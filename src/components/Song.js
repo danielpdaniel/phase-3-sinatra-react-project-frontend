@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {useParams} from "react-router-dom";
 
-function Song({ artists, songs, onCoverUpdate, onNewCover, onEditCover, onDeleteCover }) {
+function Song({ artists, songs, onNewCover, onEditCover, onDeleteCover }) {
     const params = useParams()
     // const [song, setSong] = useState(songs ? songs[0] : false);
     const song = songs ? songs.filter(song => song.id === parseInt(params.id, 10))[0] : false;
