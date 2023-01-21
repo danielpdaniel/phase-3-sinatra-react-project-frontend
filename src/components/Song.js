@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {useParams} from "react-router-dom";
 
-function Song({ artists, songs, onCoverUpdate }) {
+function Song({ artists, songs, onCoverUpdate, onNewCover, onEditCover, onDeleteCover }) {
     const params = useParams()
     // const [song, setSong] = useState(songs ? songs[0] : false);
     const song = songs ? songs.filter(song => song.id === parseInt(params.id, 10))[0] : false;
@@ -47,8 +47,8 @@ function Song({ artists, songs, onCoverUpdate }) {
         })
         .then(r=>r.json())
         .then(data=>{
-            onCoverUpdate(data)
-            console.log(data)
+            // onCoverUpdate(data)
+            onNewCover(data)
             // setCovers([...covers, data]);
             setEditStatus(null);
             setPerformanceLinkEdit("")
@@ -58,7 +58,6 @@ function Song({ artists, songs, onCoverUpdate }) {
 
     function handlePerformanceLinkEdit(e){
         setPerformanceLinkEdit(e.target.value)
-        console.log(performanceLinkEdit)
     }
 
     function handleEdit(e, cover) {
@@ -79,7 +78,7 @@ function Song({ artists, songs, onCoverUpdate }) {
         .then(data=>{
             const newCovers = covers.filter(cover => cover.artist.id !== data.artist.id)
             // setCovers([...newCovers, data])
-            onCoverUpdate(data)
+            onEditCover(data)
             setEditStatus(null)
             setPerformanceLinkEdit("")
         })
@@ -97,7 +96,7 @@ function Song({ artists, songs, onCoverUpdate }) {
            const nonDeletedCovers = covers.filter(cover => cover.id !== data.id)
             // setCovers(nonDeletedCovers)
             // onCoverDelete(data)
-            onCoverUpdate(data)
+            onDeleteCover(data)
         })
     }
 

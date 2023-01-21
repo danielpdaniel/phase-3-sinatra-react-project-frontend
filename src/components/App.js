@@ -47,8 +47,22 @@ function App() {
   }
 
   function handleDeleteArtist(artistData){
-    const updatedArtists = artists.filter(artist => artist.id !== artistData.id)
+    const updatedArtists = artists.filter(artist => artist.id !== artistData.id).map(artist =>{
+      return {...artist,
+      covers: [...artist.covers.filter(cover => cover.song.artist_id !== artistData.id)],
+      songs: [...artist.songs.map(song =>{
+        return {...song,
+        covers: [...song.covers.filter(cover => cover.artist_id !== artistData.id)]}
+      })]
+      }
+    })
+
+    const updatedSongs = songs.filter(song => song.artist_id !== artistData.id).map(song =>{
+      return {...song,
+      covers: [...song.covers.filter(cover => cover.artist_id !== artistData.id)]}
+    })
     setArtists(updatedArtists)
+    setSongs(updatedSongs)
   }
 
   // function handleArtistUpdate(artistData, deleteStatus){
@@ -113,16 +127,136 @@ function App() {
     setArtists(updatedArtists)
   }
 
-  function handleSongUpdate(songData){
-    console.log(songData)
-    const updatedArtists = artists.map(artist => artist.id !== songData.artist.id ? artist : songData.artist)
-
-    const songObj = songs.find(song => song.id === songData.id)
-    const updatedSongs = songObj ? songs.map(song => song.id !== songData.id ? song : songData) : [...songs, songData]
- 
-    setArtists(updatedArtists)
+  function handleDeleteSong(songData){
+    const updatedSongs = songs.filter(song => song.id !== songData.id)
     setSongs(updatedSongs)
+  }
 
+  // function handleSongUpdate(songData){
+  //   console.log(songData)
+  //   const updatedArtists = artists.map(artist => artist.id !== songData.artist.id ? artist : songData.artist)
+
+  //   const songObj = songs.find(song => song.id === songData.id)
+  //   const updatedSongs = songObj ? songs.map(song => song.id !== songData.id ? song : songData) : [...songs, songData]
+ 
+  //   setArtists(updatedArtists)
+  //   setSongs(updatedSongs)
+
+  // }
+
+  function handleNewCover(coverData){
+    const updatedSongs = songs.map(song => {
+      if(song.id === coverData.song_id){
+        return {...song,
+          covers: [...song.covers, coverData]
+        }
+      }
+      else {
+        return song
+      }
+    })
+
+    const updatedArtists = artists.map(artist =>{
+      if(artist.id === coverData.artist_id){
+        return {
+          ...artist,
+          covers: [...artist.covers, coverData]
+        }
+      }else {
+        return {...artist, 
+          songs: [...artist.songs.map(song => {
+            if(song.id === coverData.song_id){
+              return {...song,
+              covers: [...song.covers, coverData]}
+            }else {
+              return song
+            }
+          })]
+        }
+      }
+      })
+    setSongs(updatedSongs)
+    setArtists(updatedArtists)
+  }
+
+  function handleEditCover(coverData){
+    const updatedSongs = songs.map(song => {
+      if(song.id === coverData.song_id){
+        return {...song,
+        covers: [...song.covers.map(cover => {
+          if(cover.id === coverData.id){
+            return coverData
+          }else{
+            return cover
+          }
+        })]}
+      }else {
+        return song
+      }
+    })
+   
+    const updatedArtists = artists.map(artist => {
+      if(artist.id === coverData.artist_id){
+        return {...artist,
+          covers: [...artist.covers.map(cover => {
+            if(cover.id === coverData.id){
+              return coverData
+            }else{
+              return cover
+            }
+          })]
+        }
+      }else {
+        return {...artist,
+          songs: [...artist.songs.map(song =>{
+            if(song.id === coverData.song_id){
+              return {...song,
+              covers: [...song.covers.map(cover => {
+                if(cover.id === coverData.id){
+                  return coverData
+                }else {
+                  return cover
+                }
+              })]}
+            }else{
+              return song
+            }
+          })]
+        }
+      }
+    })
+    setSongs(updatedSongs)
+    setArtists(updatedArtists)
+  }
+
+  function handleDeleteCover(coverData){
+    const updatedSongs = songs.map(song => {
+      if(song.id === coverData.song_id){
+        return {...song,
+        covers: [...song.covers.filter(cover => cover.id !== coverData.id)]}
+      }else {
+        return song
+      }
+    })
+
+    const updatedArtists = artists.map(artist => {
+      if(artist.id === coverData.artist_id){
+        return {...artist,
+        covers: [...artist.covers.filter(cover => cover.id !== coverData.id)]}
+      }else {
+        return {...artist,
+        songs: [...artist.songs.map(song => {
+          if(song.id === coverData.song_id){
+            return{...song,
+            covers: [...song.covers.filter(cover => cover.id !== coverData.id)]}
+          }else{
+            return song
+          }
+        })]}
+      }
+    })
+    setSongs(updatedSongs)
+    setArtists(updatedArtists)
   }
 
   function handleCoverUpdate(coverData){
@@ -151,8 +285,8 @@ function App() {
       <h6 className="subHeader">Rub a dub dub love a cover in the tub...</h6>
       <NavBar/>
       <Routes>
-        <Route path="/songs" element={<SongsList artists={artists} songs={songs} onSongUpdate={handleSongUpdate} onNewSong ={handleNewSong} onEditSong={handleEditSong}/>}/>
-        <Route path="/songs/:id" element={<Song artists={artists} songs={songs} onCoverUpdate={handleCoverUpdate}/>}/>
+        <Route path="/songs" element={<SongsList artists={artists} songs={songs} onNewSong ={handleNewSong} onEditSong={handleEditSong} onDeleteSong={handleDeleteSong}/>}/>
+        <Route path="/songs/:id" element={<Song artists={artists} songs={songs} onCoverUpdate={handleCoverUpdate} onNewCover={handleNewCover} onEditCover={handleEditCover} onDeleteCover={handleDeleteCover}/>}/>
         <Route path="/artists" element={<ArtistsList artists={artists} onNewArtist={handleNewArtist} onEditArtist={handleEditArtist} onDeleteArtist={handleDeleteArtist}/>} />
         <Route path="/artists/:id" element={<Artist artists={artists} songs={songs}/>} />
         <Route exact path="/" element={<Home />}/>

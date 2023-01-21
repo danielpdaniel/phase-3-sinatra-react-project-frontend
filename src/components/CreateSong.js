@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-function CreateSong({ artists, onNewSong, onSongUpdate }){
+function CreateSong({ artists, onNewSong }){
     const [newSongTitle, setNewSongTitle] = useState("")
     const [newSongArtistName, setNewSongArtistName] = useState("")
     const [newSongArtistId, setNewSongArtistId] = useState(null)
@@ -47,7 +47,6 @@ function CreateSong({ artists, onNewSong, onSongUpdate }){
         .then(r=>r.json())
         .then(data=>{
             onNewSong(data);
-            // onSongUpdate(data);
             setNewSongTitle("");
             setNewSongArtistId(null);
             setNewSongArtistName("")
