@@ -14,6 +14,9 @@ function App() {
   const [artists, setArtists] = useState(false);
   const [songs, setSongs] = useState(false);
 
+  console.log(songs)
+  console.log(artists)
+
   useEffect(()=>{
     fetch("http://localhost:9292/artists")
     .then(r=>r.json())
@@ -90,13 +93,15 @@ function App() {
   // }
 
   function handleNewSong(songData){
-    const updatedSongs = [...songs, songData]
+    const updatedSongs = [...songs, {...songData,
+    covers: []}]
     setSongs(updatedSongs)
   
     const updatedArtists = artists.map(artist => {
       if (artist.id === songData.artist_id){
         return { ...artist,
-        songs: [...artist.songs, songData]
+        songs: [...artist.songs, {...songData,
+        covers: []}]
       }
       }else {
         return artist
@@ -263,8 +268,6 @@ function App() {
     const updatedArtists = artists.map(artist => artist.id !== coverData.song.artist.id ? artist : coverData.song.artist)
     const updatedCoverArtist = updatedArtists.map(artist => artist.id !== coverData.artist_id ? artist : coverData.artist)
     setArtists(updatedCoverArtist)
-    console.log(updatedCoverArtist)
-    
 
     const updatedSongs = songs.map(song => song.id !== coverData.song_id ? song : coverData.song)
     setSongs(updatedSongs)
