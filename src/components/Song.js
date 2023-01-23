@@ -6,7 +6,7 @@ function Song({ artists, songs, onNewCover, onEditCover, onDeleteCover }) {
     // const [song, setSong] = useState(songs ? songs[0] : false);
     const song = songs ? songs.filter(song => song.id === parseInt(params.id, 10))[0] : false;
     // const [covers, setCovers] = useState(song ? song.covers : null);
-    const covers = songs ? songs.filter(song => song.id === parseInt(params.id, 10))[0].covers : false;
+    const covers = song ? songs.filter(song => song.id === parseInt(params.id, 10))[0].covers : false;
     const [formStatus, setFormStatus] = useState(false);
     const [formArtist, setFormArtist] = useState(false);
     const [formPerformanceLink, setFormPerformanceLink] = useState(false);
@@ -143,7 +143,7 @@ function Song({ artists, songs, onNewCover, onEditCover, onDeleteCover }) {
                         {cover.id === editStatus ? null : <button onClick={()=>handleDelete(cover.id)}>delete</button>}
                     </div>) : <h5>Loading...</h5>}
             </div>
-            : <h3>Loading...</h3>}
+            : song === undefined ? <h3>Oops! That song's not in our database!</h3> : <h3>Loading...</h3>}
         </div>
     )
 }

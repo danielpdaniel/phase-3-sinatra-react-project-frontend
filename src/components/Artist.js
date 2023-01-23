@@ -6,9 +6,10 @@ function Artist({artists, songs}) {
 
     const artist = artists ? artists.filter(artist => artist.id === parseInt(params.id, 10))[0] : false;
     const artistSongs = songs ? songs.filter(song => song.artist_id === parseInt(params.id, 10)) : false;
-  
     return(
         <div>
+
+        {artist !== undefined ? <div>
             <h2>{artist ? artist.name : "Loading..."}</h2>
             <h3>Songs:</h3>
             <ul>
@@ -27,6 +28,7 @@ function Artist({artists, songs}) {
                 </li>) : 
                 <li>Loading...</li>}
             </ul>
+        </div> : <h3>Oops! That artists isn't in our database!</h3>}
         </div>
     )
 }
