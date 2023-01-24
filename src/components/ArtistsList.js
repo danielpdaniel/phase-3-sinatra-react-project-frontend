@@ -30,10 +30,8 @@ function ArtistsList({ artists, onNewArtist, onEditArtist, onDeleteArtist }) {
         })
         .then(r=>r.json())
         .then(data=>{
-            // onArtistsChange(data);
             setEditStatus(null);
             setArtistNameEdit(null); 
-            // onArtistUpdate(data);
             onEditArtist(data)
         })
     }
@@ -47,8 +45,6 @@ function ArtistsList({ artists, onNewArtist, onEditArtist, onDeleteArtist }) {
         })
         .then(r=>r.json())
         .then(data=>{
-            // onArtistsChange(data, true)
-            // onArtistUpdate(data, true)
             onDeleteArtist(data)
         })
     }

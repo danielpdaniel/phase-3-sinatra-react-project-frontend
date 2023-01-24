@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom";
 import CreateSong from "./CreateSong";
 
 function SongsList({ artists, songs, onNewSong, onEditSong, onDeleteSong }){
-    // const [songs, setSongs] = useState(false)
+  
     const [editStatus, setEditStatus] = useState(false)
     const [songTitleEdit, setSongTitleEdit] = useState(false)
     const [songLinkEdit, setSongLinkEdit] = useState("")
@@ -51,7 +51,6 @@ function SongsList({ artists, songs, onNewSong, onEditSong, onDeleteSong }){
         })
         .then(r=>r.json())
         .then(data=>{
-            // onSongsChange(data)
             onEditSong(data);
             setEditStatus(false);
         })

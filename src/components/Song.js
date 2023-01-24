@@ -47,9 +47,7 @@ function Song({ artists, songs, onNewCover, onEditCover, onDeleteCover }) {
         })
         .then(r=>r.json())
         .then(data=>{
-            // onCoverUpdate(data)
             onNewCover(data)
-            // setCovers([...covers, data]);
             setEditStatus(null);
             setPerformanceLinkEdit("")
             setFormStatus(false)
@@ -76,8 +74,6 @@ function Song({ artists, songs, onNewCover, onEditCover, onDeleteCover }) {
         })
         .then(r=>r.json())
         .then(data=>{
-            const newCovers = covers.filter(cover => cover.artist.id !== data.artist.id)
-            // setCovers([...newCovers, data])
             onEditCover(data)
             setEditStatus(null)
             setPerformanceLinkEdit("")
@@ -92,10 +88,7 @@ function Song({ artists, songs, onNewCover, onEditCover, onDeleteCover }) {
             }
         })
         .then(r=>r.json())
-        .then(data=>{
-           const nonDeletedCovers = covers.filter(cover => cover.id !== data.id)
-            // setCovers(nonDeletedCovers)
-            // onCoverDelete(data)
+        .then(data=>{           
             onDeleteCover(data)
         })
     }
